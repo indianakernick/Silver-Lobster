@@ -6,26 +6,24 @@
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include <cassert>
 #include <SDL2/SDL.h>
+#include "Game/sdl.hpp"
 
 int main() {
-  SDL_Init(SDL_INIT_VIDEO);
+  SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
-  SDL_Window *window = SDL_CreateWindow(
+  SDL_Window *window = SDL_CHECK(SDL_CreateWindow(
     "Silver Lobster",
     SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
     1280, 720,
     SDL_WINDOW_SHOWN
-  );
-  assert(window);
+  ));
   
-  SDL_Renderer *renderer = SDL_CreateRenderer(
+  SDL_Renderer *renderer = SDL_CHECK(SDL_CreateRenderer(
     window,
-    -1,
+    10,
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-  );
-  assert(renderer);
+  ));
   
   bool running = true;
   do {
@@ -36,8 +34,8 @@ int main() {
       }
     }
     
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_RenderClear(renderer);
+    SDL_CHECK(SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255));
+    SDL_CHECK(SDL_RenderClear(renderer));
     SDL_RenderPresent(renderer);
   } while (running);
   

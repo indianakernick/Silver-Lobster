@@ -34,6 +34,7 @@
 		4508C80023DA88980029A03B /* Silver_Lobster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Silver_Lobster.entitlements; sourceTree = "<group>"; };
 		4508C80723DA89140029A03B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4508C81523DA931B0029A03B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		4508C81823DAA4E80029A03B /* sdl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +81,7 @@
 		4508C80623DA88FE0029A03B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				4508C81823DAA4E80029A03B /* sdl.hpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
