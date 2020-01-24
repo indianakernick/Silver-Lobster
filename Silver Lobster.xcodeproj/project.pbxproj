@@ -7,22 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4508C7F423DA888D0029A03B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508C7F323DA888D0029A03B /* AppDelegate.swift */; };
-		4508C7F623DA888D0029A03B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4508C7F523DA888D0029A03B /* ContentView.swift */; };
 		4508C7F823DA88980029A03B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4508C7F723DA88980029A03B /* Assets.xcassets */; };
-		4508C7FB23DA88980029A03B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4508C7FA23DA88980029A03B /* Preview Assets.xcassets */; };
-		4508C7FE23DA88980029A03B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4508C7FC23DA88980029A03B /* Main.storyboard */; };
+		4508C80823DA89140029A03B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C80723DA89140029A03B /* main.cpp */; };
+		4508C81623DA931B0029A03B /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4508C81523DA931B0029A03B /* SDL2.framework */; };
+		4508C81723DA931B0029A03B /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4508C81523DA931B0029A03B /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		4508C81423DA91B90029A03B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4508C81723DA931B0029A03B /* SDL2.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4508C7F023DA888D0029A03B /* Silver Lobster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Silver Lobster.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4508C7F323DA888D0029A03B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4508C7F523DA888D0029A03B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4508C7F723DA88980029A03B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		4508C7FA23DA88980029A03B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		4508C7FD23DA88980029A03B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4508C7FF23DA88980029A03B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4508C80023DA88980029A03B /* Silver_Lobster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Silver_Lobster.entitlements; sourceTree = "<group>"; };
+		4508C80723DA89140029A03B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		4508C81523DA931B0029A03B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -30,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4508C81623DA931B0029A03B /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +53,7 @@
 			children = (
 				4508C7F223DA888D0029A03B /* Silver Lobster */,
 				4508C7F123DA888D0029A03B /* Products */,
+				4508C80923DA89620029A03B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -55,23 +68,28 @@
 		4508C7F223DA888D0029A03B /* Silver Lobster */ = {
 			isa = PBXGroup;
 			children = (
-				4508C7F323DA888D0029A03B /* AppDelegate.swift */,
-				4508C7F523DA888D0029A03B /* ContentView.swift */,
+				4508C80623DA88FE0029A03B /* Game */,
 				4508C7F723DA88980029A03B /* Assets.xcassets */,
-				4508C7FC23DA88980029A03B /* Main.storyboard */,
 				4508C7FF23DA88980029A03B /* Info.plist */,
 				4508C80023DA88980029A03B /* Silver_Lobster.entitlements */,
-				4508C7F923DA88980029A03B /* Preview Content */,
+				4508C80723DA89140029A03B /* main.cpp */,
 			);
 			path = "Silver Lobster";
 			sourceTree = "<group>";
 		};
-		4508C7F923DA88980029A03B /* Preview Content */ = {
+		4508C80623DA88FE0029A03B /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				4508C7FA23DA88980029A03B /* Preview Assets.xcassets */,
 			);
-			path = "Preview Content";
+			path = Game;
+			sourceTree = "<group>";
+		};
+		4508C80923DA89620029A03B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4508C81523DA931B0029A03B /* SDL2.framework */,
+			);
+			path = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -84,6 +102,7 @@
 				4508C7EC23DA888D0029A03B /* Sources */,
 				4508C7ED23DA888D0029A03B /* Frameworks */,
 				4508C7EE23DA888D0029A03B /* Resources */,
+				4508C81423DA91B90029A03B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -132,8 +151,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4508C7FE23DA88980029A03B /* Main.storyboard in Resources */,
-				4508C7FB23DA88980029A03B /* Preview Assets.xcassets in Resources */,
 				4508C7F823DA88980029A03B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,23 +162,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4508C7F623DA888D0029A03B /* ContentView.swift in Sources */,
-				4508C7F423DA888D0029A03B /* AppDelegate.swift in Sources */,
+				4508C80823DA89140029A03B /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		4508C7FC23DA88980029A03B /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4508C7FD23DA88980029A03B /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4508C80123DA88980029A03B /* Debug */ = {
@@ -281,18 +286,22 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = "Silver Lobster/Silver_Lobster.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Silver Lobster/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Silver Lobster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.Silver-Lobster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -304,18 +313,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CODE_SIGN_ENTITLEMENTS = "Silver Lobster/Silver_Lobster.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"Silver Lobster/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "";
 				DEVELOPMENT_TEAM = QY44MADGVC;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = "Silver Lobster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				LIBRARY_SEARCH_PATHS = "";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = "Indi-Kernick.Silver-Lobster";
 				PRODUCT_NAME = "$(TARGET_NAME)";
