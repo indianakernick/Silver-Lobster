@@ -8,6 +8,7 @@
 
 #include <SDL2/SDL.h>
 #include "Game/sdl.hpp"
+#include <entt/entt.hpp>
 
 int main() {
   SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
@@ -21,7 +22,7 @@ int main() {
   
   SDL_Renderer *renderer = SDL_CHECK(SDL_CreateRenderer(
     window,
-    10,
+    -1,
     SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
   ));
   
