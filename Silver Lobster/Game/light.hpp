@@ -9,8 +9,7 @@
 #ifndef light_hpp
 #define light_hpp
 
-#include <memory>
-#include <Graphics/surface.hpp>
+#include "image.hpp"
 
 enum class Visibility {
   unexplored,
@@ -19,8 +18,7 @@ enum class Visibility {
 };
 
 struct Light {
-  std::unique_ptr<Visibility[]> visibilityStorage;
-  gfx::Surface<Visibility> visibility;
+  Image<Visibility> visibility;
 };
 
 #endif

@@ -20,11 +20,8 @@
 void initializeWorld(World &world, const int width, const int height) {
   assert(width > 1 && width % 2 == 1);
   assert(height > 1 && height % 2 == 1);
-  // TODO: make_unique_default_init
-  world.tileStorage = std::make_unique<Tile[]>(width * height);
-  world.regionStorage = std::make_unique<Region[]>(width * height);
-  world.tiles = {world.tileStorage.get(), width, width, height};
-  world.regions = {world.regionStorage.get(), width, width, height};
+  world.tiles = {width, height};
+  world.regions = {width, height};
 }
 
 // Dungeon generation algorithm by Bob Nystrom

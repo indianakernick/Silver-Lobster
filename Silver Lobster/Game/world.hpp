@@ -9,8 +9,7 @@
 #ifndef world_hpp
 #define world_hpp
 
-#include <memory>
-#include <Graphics/surface.hpp>
+#include "image.hpp"
 
 enum class Tile : uint8_t {
   wall, // 306, 0
@@ -24,10 +23,8 @@ enum class Tile : uint8_t {
 using Region = uint8_t;
 
 struct World {
-  std::unique_ptr<Tile[]> tileStorage;
-  std::unique_ptr<Region[]> regionStorage;
-  gfx::Surface<Tile> tiles;
-  gfx::Surface<Region> regions;
+  Image<Tile> tiles;
+  Image<Region> regions;
 };
 
 #endif

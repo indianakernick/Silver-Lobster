@@ -12,12 +12,13 @@
 #include "light.hpp"
 #include "world.hpp"
 #include <Graphics/each.hpp>
+#include <Graphics/fill.hpp>
 
 void initializeLight(Light &light, const int width, const int height) {
   assert(width > 1);
   assert(height > 1);
-  light.visibilityStorage = std::make_unique<Visibility[]>(width * height);
-  light.visibility = {light.visibilityStorage.get(), width, width, height};
+  light.visibility = {width, height};
+  gfx::fill(light.visibility.view(), Visibility::unexplored);
 }
 
 namespace {

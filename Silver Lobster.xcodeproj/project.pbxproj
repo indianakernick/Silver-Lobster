@@ -43,6 +43,7 @@
 		4508C81E23DC09320029A03B /* light.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = light.hpp; sourceTree = "<group>"; };
 		4508C81F23DC0A380029A03B /* vision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vision.cpp; sourceTree = "<group>"; };
 		4508C82023DC0A380029A03B /* vision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vision.hpp; sourceTree = "<group>"; };
+		4508C82223DC27A30029A03B /* image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 				4508C81E23DC09320029A03B /* light.hpp */,
 				4508C81F23DC0A380029A03B /* vision.cpp */,
 				4508C82023DC0A380029A03B /* vision.hpp */,
+				4508C82223DC27A30029A03B /* image.hpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
