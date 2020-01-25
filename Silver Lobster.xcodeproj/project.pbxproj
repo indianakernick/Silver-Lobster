@@ -11,6 +11,7 @@
 		4508C80823DA89140029A03B /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C80723DA89140029A03B /* main.cpp */; };
 		4508C81623DA931B0029A03B /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4508C81523DA931B0029A03B /* SDL2.framework */; };
 		4508C81723DA931B0029A03B /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4508C81523DA931B0029A03B /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		4508C81D23DBEFFE0029A03B /* world generation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C81B23DBEFFE0029A03B /* world generation.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -35,6 +36,9 @@
 		4508C80723DA89140029A03B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4508C81523DA931B0029A03B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
 		4508C81823DAA4E80029A03B /* sdl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl.hpp; sourceTree = "<group>"; };
+		4508C81A23DBEFA20029A03B /* world.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = world.hpp; sourceTree = "<group>"; };
+		4508C81B23DBEFFE0029A03B /* world generation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "world generation.cpp"; sourceTree = "<group>"; };
+		4508C81C23DBEFFE0029A03B /* world generation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "world generation.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +86,9 @@
 			isa = PBXGroup;
 			children = (
 				4508C81823DAA4E80029A03B /* sdl.hpp */,
+				4508C81A23DBEFA20029A03B /* world.hpp */,
+				4508C81B23DBEFFE0029A03B /* world generation.cpp */,
+				4508C81C23DBEFFE0029A03B /* world generation.hpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -165,6 +172,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
+				4508C81D23DBEFFE0029A03B /* world generation.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,7 +296,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
 				CODE_SIGN_ENTITLEMENTS = "Silver Lobster/Silver_Lobster.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -330,7 +338,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++2a";
 				CODE_SIGN_ENTITLEMENTS = "Silver Lobster/Silver_Lobster.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;

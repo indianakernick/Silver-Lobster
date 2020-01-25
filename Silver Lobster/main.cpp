@@ -8,9 +8,55 @@
 
 #include <SDL2/SDL.h>
 #include "Game/sdl.hpp"
-#include <entt/entt.hpp>
+
+#include <iostream>
+#include "Game/world.hpp"
+#include <Graphics/iterator.hpp>
+#include "Game/world generation.hpp"
+
+char tileChar(const Tile tile) {
+  switch (tile) {
+    case Tile::wall:
+      return '#';
+    case Tile::path:
+      return '.';
+    case Tile::room:
+      return ' ';
+    case Tile::closed_door:
+      return '*';
+    case Tile::open_door:
+      return 'O';
+    case Tile::stairs:
+      return '/';
+  }
+}
+
+void print(gfx::Surface<const Tile> tiles) {
+  for (auto row : range(tiles)) {
+    for (const Tile tile : row) {
+      std::cout << tileChar(tile);
+    }
+    std::cout << '\n';
+  }
+}
 
 int main() {
+  const GenParams params = {
+    .seed = 12345,
+    .roomSizeMin = 3,
+    .roomSizeMax = 9,
+    .roomDensity = 200,
+    .mazeStraightness = 100,
+    .connectionRedundancy = 2
+  };
+
+  World world;
+  initializeWorld(world, 31, 31);
+  generateTerrain(world, params);
+  print(world.tiles);
+ 
+  /*
+  
   SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
   SDL_Window *window = SDL_CHECK(SDL_CreateWindow(
@@ -43,4 +89,6 @@ int main() {
   SDL_DestroyRenderer(renderer);
   SDL_DestroyWindow(window);
   SDL_Quit();
+  
+  */
 }
