@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include "Game/world.hpp"
+#include "Game/light.hpp"
+#include "Game/vision.hpp"
 #include <Graphics/iterator.hpp>
 #include "Game/world generation.hpp"
 
@@ -31,17 +33,22 @@ char tileChar(const Tile tile) {
   }
 }
 
-void print(gfx::Surface<const Tile> tiles) {
+void print(gfx::Surface<const Tile> tiles, gfx::Surface<const Visibility> vis) {
+  auto visRowIter = begin(vis);
   for (auto row : range(tiles)) {
+    const Visibility *visColIter = visRowIter.begin();
     for (const Tile tile : row) {
-      std::cout << tileChar(tile);
+      std::cout << (*visColIter == Visibility::visible ? tileChar(tile) : ' ');
+      //std::cout << tileChar(tile);
+      ++visColIter;
     }
     std::cout << '\n';
+    ++visRowIter;
   }
 }
 
 int main() {
-  const GenParams params = {
+  const GenParams genParams = {
     .seed = 12345,
     .roomSizeMin = 3,
     .roomSizeMax = 9,
@@ -49,11 +56,17 @@ int main() {
     .mazeStraightness = 100,
     .connectionRedundancy = 2
   };
+  const VisParams visParams = {
+    .range = -1
+  };
 
   World world;
+  Light light;
   initializeWorld(world, 31, 31);
-  generateTerrain(world, params);
-  print(world.tiles);
+  initializeLight(light, 31, 31);
+  generateTerrain(world, genParams);
+  updateLight(light, world, {12, 1}, visParams);
+  print(world.tiles, light.visibility);
  
   /*
   

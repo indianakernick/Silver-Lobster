@@ -20,6 +20,7 @@
 void initializeWorld(World &world, const int width, const int height) {
   assert(width > 1 && width % 2 == 1);
   assert(height > 1 && height % 2 == 1);
+  // TODO: make_unique_default_init
   world.tileStorage = std::make_unique<Tile[]>(width * height);
   world.regionStorage = std::make_unique<Region[]>(width * height);
   world.tiles = {world.tileStorage.get(), width, width, height};
@@ -28,13 +29,6 @@ void initializeWorld(World &world, const int width, const int height) {
 
 // Dungeon generation algorithm by Bob Nystrom
 // http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
-
-template <>
-struct std::hash<gfx::Point> {
-  size_t operator()(const gfx::Point point) const noexcept {
-    return (static_cast<size_t>(point.x) << 32) | point.y;
-  }
-};
 
 namespace {
 
