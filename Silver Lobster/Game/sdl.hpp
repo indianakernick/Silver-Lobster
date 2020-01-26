@@ -20,7 +20,7 @@ public:
     : std::runtime_error{error} {}
 };
 
-[[noreturn]] void raise() {
+[[noreturn]] inline void raise() {
   const char *error = SDL_GetError();
   throw Error{error};
 }
@@ -34,7 +34,7 @@ template <typename Ptr>
   }
 }
 
-void check(const int code) {
+inline void check(const int code) {
   if (code == -1) raise();
 }
 

@@ -13,6 +13,10 @@
 		4508C81723DA931B0029A03B /* SDL2.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4508C81523DA931B0029A03B /* SDL2.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4508C81D23DBEFFE0029A03B /* world generation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C81B23DBEFFE0029A03B /* world generation.cpp */; };
 		4508C82123DC0A380029A03B /* vision.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C81F23DC0A380029A03B /* vision.cpp */; };
+		4508C82523DD259E0029A03B /* prototype spritesheet.png in Resources */ = {isa = PBXBuildFile; fileRef = 4508C82423DD259D0029A03B /* prototype spritesheet.png */; };
+		4508C82923DD26770029A03B /* world rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82723DD26770029A03B /* world rendering.cpp */; };
+		4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82A23DD2C7F0029A03B /* texture loading.cpp */; };
+		4508C82F23DD2CE30029A03B /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82E23DD2CE30029A03B /* stb_image.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -44,6 +48,13 @@
 		4508C81F23DC0A380029A03B /* vision.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = vision.cpp; sourceTree = "<group>"; };
 		4508C82023DC0A380029A03B /* vision.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = vision.hpp; sourceTree = "<group>"; };
 		4508C82223DC27A30029A03B /* image.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = image.hpp; sourceTree = "<group>"; };
+		4508C82423DD259D0029A03B /* prototype spritesheet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "prototype spritesheet.png"; sourceTree = "<group>"; };
+		4508C82723DD26770029A03B /* world rendering.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "world rendering.cpp"; sourceTree = "<group>"; };
+		4508C82823DD26770029A03B /* world rendering.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "world rendering.hpp"; sourceTree = "<group>"; };
+		4508C82A23DD2C7F0029A03B /* texture loading.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "texture loading.cpp"; sourceTree = "<group>"; };
+		4508C82B23DD2C7F0029A03B /* texture loading.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "texture loading.hpp"; sourceTree = "<group>"; };
+		4508C82D23DD2CC90029A03B /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
+		4508C82E23DD2CE30029A03B /* stb_image.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +89,7 @@
 		4508C7F223DA888D0029A03B /* Silver Lobster */ = {
 			isa = PBXGroup;
 			children = (
+				4508C82323DD256C0029A03B /* Resources */,
 				4508C80623DA88FE0029A03B /* Game */,
 				4508C7F723DA88980029A03B /* Assets.xcassets */,
 				4508C7FF23DA88980029A03B /* Info.plist */,
@@ -90,6 +102,8 @@
 		4508C80623DA88FE0029A03B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				4508C82E23DD2CE30029A03B /* stb_image.c */,
+				4508C82D23DD2CC90029A03B /* stb_image.h */,
 				4508C81823DAA4E80029A03B /* sdl.hpp */,
 				4508C81A23DBEFA20029A03B /* world.hpp */,
 				4508C81B23DBEFFE0029A03B /* world generation.cpp */,
@@ -98,6 +112,10 @@
 				4508C81F23DC0A380029A03B /* vision.cpp */,
 				4508C82023DC0A380029A03B /* vision.hpp */,
 				4508C82223DC27A30029A03B /* image.hpp */,
+				4508C82723DD26770029A03B /* world rendering.cpp */,
+				4508C82823DD26770029A03B /* world rendering.hpp */,
+				4508C82A23DD2C7F0029A03B /* texture loading.cpp */,
+				4508C82B23DD2C7F0029A03B /* texture loading.hpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -108,6 +126,14 @@
 				4508C81523DA931B0029A03B /* SDL2.framework */,
 			);
 			path = Frameworks;
+			sourceTree = "<group>";
+		};
+		4508C82323DD256C0029A03B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				4508C82423DD259D0029A03B /* prototype spritesheet.png */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -169,6 +195,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4508C82523DD259E0029A03B /* prototype spritesheet.png in Resources */,
 				4508C7F823DA88980029A03B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -182,7 +209,10 @@
 			files = (
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
 				4508C81D23DBEFFE0029A03B /* world generation.cpp in Sources */,
+				4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */,
+				4508C82923DD26770029A03B /* world rendering.cpp in Sources */,
 				4508C82123DC0A380029A03B /* vision.cpp in Sources */,
+				4508C82F23DD2CE30029A03B /* stb_image.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +345,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				GCC_PREPROCESSOR_DEFINITIONS = STBI_ONLY_PNG;
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "Silver Lobster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -357,7 +388,10 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				GCC_PREPROCESSOR_DEFINITIONS = NDEBUG;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					STBI_ONLY_PNG,
+				);
 				HEADER_SEARCH_PATHS = /usr/local/include;
 				INFOPLIST_FILE = "Silver Lobster/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (

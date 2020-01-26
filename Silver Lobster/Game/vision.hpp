@@ -20,5 +20,6 @@ struct VisParams {
 
 void initializeLight(Light &, int, int);
 void updateLight(Light &, const World &, gfx::Point, const VisParams &);
+void illuminate(Light &);
 
 #endif

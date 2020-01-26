@@ -219,3 +219,7 @@ void updateLight(
   Vision vision{light, world};
   vision.update(origin, params);
 }
+
+void illuminate(Light &light) {
+  gfx::fill(light.visibility.view(), Visibility::visible);
+}
