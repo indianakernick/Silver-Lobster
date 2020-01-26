@@ -12,12 +12,12 @@
 #include "image.hpp"
 
 enum class Tile : uint8_t {
-  wall, // 306, 0
-  path, // 0, 0 or 17, 0
-  room, // 0, 0
-  closed_door, // 68, 153
-  open_door, // 102, 153
-  stairs // 34, 102
+  wall,
+  path,
+  room,
+  closed_door,
+  open_door,
+  stairs
 };
 
 using Region = uint8_t;

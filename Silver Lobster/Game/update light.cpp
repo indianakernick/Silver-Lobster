@@ -1,30 +1,30 @@
 //
-//  vision.cpp
+//  update light.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "vision.hpp"
+#include "update light.hpp"
 
 #include <cmath>
 #include "light.hpp"
 #include "world.hpp"
+#include "intents.hpp"
+#include "position.hpp"
 #include <Graphics/each.hpp>
 #include <Graphics/fill.hpp>
-
-void initializeLight(Light &light, const int width, const int height) {
-  assert(width > 1);
-  assert(height > 1);
-  light.visibility = {width, height};
-  gfx::fill(light.visibility.view(), Visibility::unexplored);
-}
+#include <entt/entity/registry.hpp>
 
 namespace {
 
 // Vision algorithm by Adam Milazzo
 // http://www.adammil.net/blog/v125_Roguelike_Vision_Algorithms.html
+
+struct VisParams {
+  int range;
+};
 
 struct Slope {
   unsigned y, x;
@@ -210,16 +210,23 @@ private:
 
 }
 
-void updateLight(
-  Light &light,
-  const World &world,
-  const gfx::Point origin,
-  const VisParams &params
-) {
-  Vision vision{light, world};
-  vision.update(origin, params);
+void initializeLight(entt::registry &reg, const int width, const int height) {
+  assert(width > 1);
+  assert(height > 1);
+  Light &light = reg.set<Light>();
+  light.visibility = {width, height};
+  gfx::fill(light.visibility.view(), Visibility::unexplored);
 }
 
-void illuminate(Light &light) {
-  gfx::fill(light.visibility.view(), Visibility::visible);
+void updateLight(entt::registry &reg) {
+  reg.view<Position, UpdateLight>().less([&](auto pos) {
+    Vision vision{reg.ctx<Light>(), reg.ctx<World>()};
+    const VisParams params = {-1};
+    vision.update({pos.x, pos.y}, params);
+  });
+  reg.reset<UpdateLight>();
+}
+
+void illuminate(entt::registry &reg) {
+  gfx::fill(reg.ctx<Light>().visibility.view(), Visibility::visible);
 }

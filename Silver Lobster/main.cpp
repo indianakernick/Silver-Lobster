@@ -8,14 +8,21 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include "Game/world.hpp"
-#include "Game/light.hpp"
-#include "Game/vision.hpp"
+#include "Game/tags.hpp"
+#include "Game/sprite.hpp"
+#include "Game/intents.hpp"
+#include "Game/renderer.hpp"
+#include "Game/position.hpp"
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
+#include "Game/update light.hpp"
+#include "Game/render world.hpp"
+#include "Game/handle input.hpp"
+#include "Game/move entities.hpp"
+#include "Game/generate world.hpp"
+#include <entt/entity/registry.hpp>
+#include "Game/render entities.hpp"
 #include "Game/texture loading.hpp"
-#include "Game/world rendering.hpp"
-#include "Game/world generation.hpp"
 
 std::string res(const char *path) {
   return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
@@ -40,6 +47,8 @@ public:
     )));
     
     sprites = loadTexture(renderer.get(), res("prototype spritesheet.png").c_str());
+    
+    reg.set<Renderer>(sprites.get(), renderer.get());
   }
   
   void quit() {
@@ -52,53 +61,23 @@ public:
   void render() {
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
-    renderWorld(renderer.get(), sprites.get(), world, light);
-    const SDL_Rect srcRect = {459, 0, 16, 16};
-    const SDL_Rect dstRect = {16 * player.x, 16 * player.y, 16, 16};
-    SDL_CHECK(SDL_RenderCopy(renderer.get(), sprites.get(), &srcRect, &dstRect));
+    renderWorld(reg);
+    renderEntities(reg);
     SDL_RenderPresent(renderer.get());
   }
   
   void initLevel() {
-    const GenParams genParams = {
-      .seed = 12345,
-      .roomSizeMin = 3,
-      .roomSizeMax = 9,
-      .roomDensity = 200,
-      .mazeStraightness = 100,
-      .connectionRedundancy = 2
-    };
-    const VisParams visParams = {
-      .range = -1
-    };
-    
-    initializeWorld(world, 31, 31);
-    initializeLight(light, 31, 31);
-    generateTerrain(world, genParams);
-    updateLight(light, world, player, visParams);
-    // illuminate(light);
-  }
+    entt::entity player = reg.create();
+    reg.assign<Player>(player);
+    reg.assign<Position>(player, 12, 1);
+    reg.assign<Sprite>(player, 459, 0);
+    reg.assign<UpdateLight>(player);
   
-  void input(const SDL_Scancode key) {
-    switch (key) {
-      case SDL_SCANCODE_UP:
-        --player.y;
-        break;
-      case SDL_SCANCODE_RIGHT:
-        ++player.x;
-        break;
-      case SDL_SCANCODE_DOWN:
-        ++player.y;
-        break;
-      case SDL_SCANCODE_LEFT:
-        --player.x;
-        break;
-      default:
-        return;
-    }
-    
-    updateLight(light, world, player, {-1});
-    render();
+    initializeWorld(reg, 31, 31);
+    initializeLight(reg, 31, 31);
+    generateTerrain(reg);
+    updateLight(reg);
+    // illuminate(reg);
   }
   
   void run() {
@@ -109,11 +88,14 @@ public:
         if (e.type == SDL_QUIT) {
           running = false;
         } else if (e.type == SDL_KEYDOWN) {
-          input(e.key.keysym.scancode);
+          if (handleKeyDown(reg, e.key.keysym.scancode)) {
+            moveEntities(reg);
+            updateLight(reg);
+            render();
+          }
         }
       }
-      
-      SDL_Delay(5);
+      SDL_Delay(10);
     } while (running);
   }
   
@@ -121,9 +103,7 @@ private:
   SDL::Window window;
   SDL::Renderer renderer;
   SDL::Texture sprites;
-  World world;
-  Light light;
-  gfx::Point player = {12, 1};
+  entt::registry reg;
 };
 
 int main() {

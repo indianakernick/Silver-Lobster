@@ -1,12 +1,12 @@
 //
-//  world generation.cpp
+//  generate world.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "world generation.hpp"
+#include "generate world.hpp"
 
 #include <set>
 #include <random>
@@ -15,19 +15,22 @@
 #include <unordered_map>
 #include <Graphics/fill.hpp>
 #include <Graphics/compare.hpp>
+#include <entt/entity/registry.hpp>
 #include <Simpleton/Grid/dir bits.hpp>
-
-void initializeWorld(World &world, const int width, const int height) {
-  assert(width > 1 && width % 2 == 1);
-  assert(height > 1 && height % 2 == 1);
-  world.tiles = {width, height};
-  world.regions = {width, height};
-}
 
 // Dungeon generation algorithm by Bob Nystrom
 // http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
 
 namespace {
+
+struct GenParams {
+  uint64_t seed;
+  int roomSizeMin;
+  int roomSizeMax;
+  int roomDensity;
+  int mazeStraightness;
+  int connectionRedundancy;
+};
 
 constexpr Region null_region = ~Region{};
 
@@ -305,7 +308,23 @@ private:
 
 }
 
-void generateTerrain(World &world, const GenParams &params) {
-  Generator gen{world};
+void initializeWorld(entt::registry &reg, const int width, const int height) {
+  assert(width > 1 && width % 2 == 1);
+  assert(height > 1 && height % 2 == 1);
+  World &world = reg.set<World>();
+  world.tiles = {width, height};
+  world.regions = {width, height};
+}
+
+void generateTerrain(entt::registry &reg) {
+  const GenParams params = {
+    .seed = 12345,
+    .roomSizeMin = 3,
+    .roomSizeMax = 9,
+    .roomDensity = 200,
+    .mazeStraightness = 100,
+    .connectionRedundancy = 2
+  };
+  Generator gen{reg.ctx<World>()};
   gen.generate(params);
 }

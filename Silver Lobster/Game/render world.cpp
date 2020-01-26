@@ -1,17 +1,19 @@
 //
-//  world rendering.cpp
+//  render world.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 26/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "world rendering.hpp"
+#include "render world.hpp"
 
 #include "light.hpp"
 #include "world.hpp"
+#include "renderer.hpp"
 #include "sdl check.hpp"
 #include <SDL2/SDL_render.h>
+#include <entt/entity/registry.hpp>
 
 namespace {
 
@@ -42,21 +44,17 @@ SDL_Rect sourceRect(const Tile tile) {
 
 }
 
-void renderWorld(
-  SDL_Renderer *renderer,
-  SDL_Texture *texture,
-  const World &world,
-  const Light &light
-) {
-  const gfx::Surface<const Tile> tiles = world.tiles;
-  const gfx::Surface<const Visibility> visible = light.visibility;
+void renderWorld(const entt::registry &reg) {
+  const gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
+  const gfx::Surface<const Visibility> visible = reg.ctx<Light>().visibility;
+  auto renderer = reg.ctx<Renderer>();
   for (int y = 0; y != tiles.height(); ++y) {
     for (int x = 0; x != tiles.width(); ++x) {
-      setColorMod(texture, visible.ref(x, y));
+      setColorMod(renderer.tex, visible.ref(x, y));
       const SDL_Rect srcRect = sourceRect(tiles.ref(x, y));
       const SDL_Rect dstRect = {x * 16, y * 16, 16, 16};
-      SDL_CHECK(SDL_RenderCopy(renderer, texture, &srcRect, &dstRect));
+      SDL_CHECK(SDL_RenderCopy(renderer.ren, renderer.tex, &srcRect, &dstRect));
     }
   }
-  SDL_CHECK(SDL_SetTextureColorMod(texture, 255, 255, 255));
+  SDL_CHECK(SDL_SetTextureColorMod(renderer.tex, 255, 255, 255));
 }
