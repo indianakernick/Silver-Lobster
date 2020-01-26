@@ -9,10 +9,10 @@
 #ifndef intents_hpp
 #define intents_hpp
 
-#include <Simpleton/Grid/dir.hpp>
+#include "dir.hpp"
 
 struct Move {
-  Grid::Dir dir;
+  Dir dir;
 };
 
 struct UpdateLight {};

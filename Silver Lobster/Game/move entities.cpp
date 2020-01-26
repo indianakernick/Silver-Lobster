@@ -16,24 +16,40 @@
 void moveEntities(entt::registry &reg) {
   reg.view<Position, Move>().each([](auto &pos, auto move) {
     switch (move.dir) {
-      case Grid::Dir::up:
+      case Dir::up:
         --pos.y;
         break;
-      case Grid::Dir::right:
+      case Dir::up_right:
+        ++pos.x;
+        --pos.y;
+        break;
+      case Dir::right:
         ++pos.x;
         break;
-      case Grid::Dir::down:
+      case Dir::down_right:
+        ++pos.x;
         ++pos.y;
         break;
-      case Grid::Dir::left:
+      case Dir::down:
+        ++pos.y;
+        break;
+      case Dir::down_left:
+        --pos.x;
+        ++pos.y;
+        break;
+      case Dir::left:
         --pos.x;
         break;
-      case Grid::Dir::none:
+      case Dir::up_left:
+        --pos.x;
+        --pos.y;
+        break;
+      case Dir::none:
         break; // rest
     }
   });
   reg.view<Player, Move>().less([&](entt::entity player, auto move) {
-    if (move.dir != Grid::Dir::none) {
+    if (move.dir != Dir::none) {
       reg.assign<UpdateLight>(player);
     }
   });
