@@ -1,13 +1,13 @@
 //
-//  sdl.hpp
+//  sdl check.hpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 24/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#ifndef sdl_hpp
-#define sdl_hpp
+#ifndef sdl_check_hpp
+#define sdl_check_hpp
 
 #include <stdexcept>
 #include <SDL2/SDL_error.h>

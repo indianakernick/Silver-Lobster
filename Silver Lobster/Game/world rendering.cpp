@@ -8,9 +8,9 @@
 
 #include "world rendering.hpp"
 
-#include "sdl.hpp"
 #include "light.hpp"
 #include "world.hpp"
+#include "sdl check.hpp"
 #include <SDL2/SDL_render.h>
 
 namespace {

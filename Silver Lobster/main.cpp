@@ -8,10 +8,11 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include "Game/sdl.hpp"
 #include "Game/world.hpp"
 #include "Game/light.hpp"
 #include "Game/vision.hpp"
+#include "Game/sdl check.hpp"
+#include "Game/sdl delete.hpp"
 #include "Game/texture loading.hpp"
 #include "Game/world rendering.hpp"
 #include "Game/world generation.hpp"
@@ -25,34 +26,34 @@ public:
   void init() {
     SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
-    window = SDL_CHECK(SDL_CreateWindow(
+    window.reset(SDL_CHECK(SDL_CreateWindow(
       "Silver Lobster",
       SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
       1280, 720,
       SDL_WINDOW_SHOWN
-    ));
+    )));
     
-    renderer = SDL_CHECK(SDL_CreateRenderer(
-      window,
+    renderer.reset(SDL_CHECK(SDL_CreateRenderer(
+      window.get(),
       -1,
       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
-    ));
+    )));
     
-    sprites = loadTexture(renderer, res("prototype spritesheet.png").c_str());
+    sprites = loadTexture(renderer.get(), res("prototype spritesheet.png").c_str());
   }
   
   void quit() {
-    SDL_DestroyTexture(sprites);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    sprites.reset();
+    renderer.reset();
+    window.reset();
     SDL_Quit();
   }
   
   void render() {
-    SDL_CHECK(SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255));
-    SDL_CHECK(SDL_RenderClear(renderer));
-    renderWorld(renderer, sprites, world, light);
-    SDL_RenderPresent(renderer);
+    SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
+    SDL_CHECK(SDL_RenderClear(renderer.get()));
+    renderWorld(renderer.get(), sprites.get(), world, light);
+    SDL_RenderPresent(renderer.get());
   }
   
   void initLevel() {
@@ -90,9 +91,9 @@ public:
   }
   
 private:
-  SDL_Window *window = nullptr;
-  SDL_Renderer *renderer = nullptr;
-  SDL_Texture *sprites = nullptr;
+  SDL::Window window;
+  SDL::Renderer renderer;
+  SDL::Texture sprites;
   World world;
   Light light;
 };

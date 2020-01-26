@@ -17,6 +17,7 @@
 		4508C82923DD26770029A03B /* world rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82723DD26770029A03B /* world rendering.cpp */; };
 		4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82A23DD2C7F0029A03B /* texture loading.cpp */; };
 		4508C82F23DD2CE30029A03B /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82E23DD2CE30029A03B /* stb_image.c */; };
+		45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B9F6E123DD386000CA9021 /* sdl delete.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -40,7 +41,7 @@
 		4508C80023DA88980029A03B /* Silver_Lobster.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Silver_Lobster.entitlements; sourceTree = "<group>"; };
 		4508C80723DA89140029A03B /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		4508C81523DA931B0029A03B /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
-		4508C81823DAA4E80029A03B /* sdl.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = sdl.hpp; sourceTree = "<group>"; };
+		4508C81823DAA4E80029A03B /* sdl check.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "sdl check.hpp"; sourceTree = "<group>"; };
 		4508C81A23DBEFA20029A03B /* world.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = world.hpp; sourceTree = "<group>"; };
 		4508C81B23DBEFFE0029A03B /* world generation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "world generation.cpp"; sourceTree = "<group>"; };
 		4508C81C23DBEFFE0029A03B /* world generation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "world generation.hpp"; sourceTree = "<group>"; };
@@ -55,6 +56,8 @@
 		4508C82B23DD2C7F0029A03B /* texture loading.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "texture loading.hpp"; sourceTree = "<group>"; };
 		4508C82D23DD2CC90029A03B /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		4508C82E23DD2CE30029A03B /* stb_image.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
+		45B9F6E123DD386000CA9021 /* sdl delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "sdl delete.cpp"; sourceTree = "<group>"; };
+		45B9F6E223DD386000CA9021 /* sdl delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "sdl delete.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,9 +105,7 @@
 		4508C80623DA88FE0029A03B /* Game */ = {
 			isa = PBXGroup;
 			children = (
-				4508C82E23DD2CE30029A03B /* stb_image.c */,
-				4508C82D23DD2CC90029A03B /* stb_image.h */,
-				4508C81823DAA4E80029A03B /* sdl.hpp */,
+				45B9F6E423DD3B1B00CA9021 /* Utilities */,
 				4508C81A23DBEFA20029A03B /* world.hpp */,
 				4508C81B23DBEFFE0029A03B /* world generation.cpp */,
 				4508C81C23DBEFFE0029A03B /* world generation.hpp */,
@@ -114,8 +115,6 @@
 				4508C82223DC27A30029A03B /* image.hpp */,
 				4508C82723DD26770029A03B /* world rendering.cpp */,
 				4508C82823DD26770029A03B /* world rendering.hpp */,
-				4508C82A23DD2C7F0029A03B /* texture loading.cpp */,
-				4508C82B23DD2C7F0029A03B /* texture loading.hpp */,
 			);
 			path = Game;
 			sourceTree = "<group>";
@@ -134,6 +133,20 @@
 				4508C82423DD259D0029A03B /* prototype spritesheet.png */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		45B9F6E423DD3B1B00CA9021 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4508C82E23DD2CE30029A03B /* stb_image.c */,
+				4508C82D23DD2CC90029A03B /* stb_image.h */,
+				4508C81823DAA4E80029A03B /* sdl check.hpp */,
+				45B9F6E123DD386000CA9021 /* sdl delete.cpp */,
+				45B9F6E223DD386000CA9021 /* sdl delete.hpp */,
+				4508C82A23DD2C7F0029A03B /* texture loading.cpp */,
+				4508C82B23DD2C7F0029A03B /* texture loading.hpp */,
+			);
+			name = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -211,6 +224,7 @@
 				4508C81D23DBEFFE0029A03B /* world generation.cpp in Sources */,
 				4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */,
 				4508C82923DD26770029A03B /* world rendering.cpp in Sources */,
+				45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */,
 				4508C82123DC0A380029A03B /* vision.cpp in Sources */,
 				4508C82F23DD2CE30029A03B /* stb_image.c in Sources */,
 			);

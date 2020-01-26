@@ -9,9 +9,8 @@
 #ifndef texture_loading_hpp
 #define texture_loading_hpp
 
-struct SDL_Texture;
-struct SDL_Renderer;
+#include "sdl delete.hpp"
 
-SDL_Texture *loadTexture(SDL_Renderer *, const char *);
+SDL::Texture loadTexture(SDL_Renderer *, const char *);
 
 #endif
