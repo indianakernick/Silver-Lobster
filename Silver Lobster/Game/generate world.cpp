@@ -11,12 +11,12 @@
 #include <set>
 #include <random>
 #include "world.hpp"
+#include "dir set.hpp"
 #include <unordered_set>
 #include <unordered_map>
 #include <Graphics/fill.hpp>
 #include <Graphics/compare.hpp>
 #include <entt/entity/registry.hpp>
-#include <Simpleton/Grid/dir bits.hpp>
 
 // Dungeon generation algorithm by Bob Nystrom
 // http://journal.stuffwithstuff.com/2014/12/21/rooms-and-mazes/
@@ -40,13 +40,13 @@ gfx::Rect addMargin(const gfx::Rect rect) {
   return {rect.p - 1, rect.s + 2};
 }
 
-gfx::Point toPoint(const Grid::Dir dir, const int mul = 1) {
+gfx::Point toPoint(const Dir dir, const int mul = 1) {
   switch (dir) {
-    case Grid::Dir::none:  return {0, 0};
-    case Grid::Dir::up:    return {0, -1 * mul};
-    case Grid::Dir::right: return {1 * mul, 0};
-    case Grid::Dir::down:  return {0, 1 * mul};
-    case Grid::Dir::left:  return {-1 * mul, 0};
+    case Dir::none:  return {0, 0};
+    case Dir::up:    return {0, -1 * mul};
+    case Dir::right: return {1 * mul, 0};
+    case Dir::down:  return {0, 1 * mul};
+    case Dir::left:  return {-1 * mul, 0};
     default: assert(false);
   }
 }
@@ -114,17 +114,17 @@ private:
   
   // ------------------------------- mazes ---------------------------------- //
   
-  Grid::Dir randomDir(const Grid::DirBits dirs) {
-    assert(dirs != Grid::DirBits::none);
-    std::uniform_int_distribution<Grid::DirType> dirDist{0, 3};
-    Grid::DirType bit = dirDist(rng);
-    while (!Grid::test(dirs, Grid::Dir{bit})) {
-      bit = (bit + 1) & 3;
+  Dir randomDir(const DirSet dirs) {
+    assert(dirs.anyCardinal());
+    std::uniform_int_distribution<uint8_t> dirDist{0, 3};
+    Dir dir = fromCardinalIndex(dirDist(rng));
+    while (!dirs.test(dir)) {
+      dir = rotateCW90(dir);
     }
-    return Grid::Dir{bit};
+    return dir;
   }
   
-  bool canCarve(const gfx::Point pos, const Grid::Dir dir) {
+  bool canCarve(const gfx::Point pos, const Dir dir) {
     if (!tiles.contains(pos + toPoint(dir, 3))) return false;
     return tiles.ref(pos + toPoint(dir, 2)) == Tile::wall;
   }
@@ -134,7 +134,7 @@ private:
     
     IntDist straightDist{0, 99};
     std::vector<gfx::Point> cells;
-    Grid::Dir lastDir = Grid::Dir::none;
+    Dir lastDir = Dir::none;
     
     startRegion();
     carve(start, Tile::path);
@@ -142,18 +142,18 @@ private:
     
     while (!cells.empty()) {
       gfx::Point cell = cells.back();
-      Grid::DirBits unmadeCells = Grid::DirBits::none;
+      DirSet unmadeCells;
 
-      for (const Grid::Dir dir : Grid::dir_range) {
+      for (const Dir dir : cardinal_dirs) {
         if (canCarve(cell, dir)) {
-          unmadeCells = Grid::set(unmadeCells, dir);
+          unmadeCells.set(dir);
         }
       }
 
-      if (unmadeCells != Grid::DirBits::none) {
-        Grid::Dir dir = randomDir(unmadeCells);
-        if (lastDir != Grid::Dir::none) {
-          if (Grid::test(unmadeCells, lastDir)) {
+      if (unmadeCells.any()) {
+        Dir dir = randomDir(unmadeCells);
+        if (lastDir != Dir::none) {
+          if (unmadeCells.test(lastDir)) {
             if (straightDist(rng) < params.mazeStraightness) {
               dir = lastDir;
             }
@@ -167,7 +167,7 @@ private:
         lastDir = dir;
       } else {
         cells.pop_back();
-        lastDir = Grid::Dir::none;
+        lastDir = Dir::none;
       }
     }
   }
@@ -195,7 +195,7 @@ private:
       for (int x = 1; x != tiles.width() - 1; ++x) {
         if (tiles.ref(x, y) != Tile::wall) continue;
         RegionSet connectorRegions;
-        for (const Grid::Dir dir : Grid::dir_range) {
+        for (const Dir dir : cardinal_dirs) {
           const Region region = regions.ref(gfx::Point{x, y} + toPoint(dir));
           if (region != null_region) {
             connectorRegions.insert(region);
@@ -289,14 +289,14 @@ private:
         for (int x = 1; x != tiles.width() - 1; ++x) {
           if (tiles.ref(x, y) == Tile::wall) continue;
 
-          Grid::DirBits exits = Grid::DirBits::none;
-          for (const Grid::Dir dir : Grid::dir_range) {
+          DirSet exits;
+          for (const Dir dir : cardinal_dirs) {
             if (tiles.ref(gfx::Point{x, y} + toPoint(dir)) != Tile::wall) {
-              exits = Grid::set(exits, dir);
+              exits.set(dir);
             }
           }
           
-          if (Grid::count(exits) == 1) {
+          if (exits.count() == 1) {
             done = false;
             tiles.ref(x, y) = Tile::wall;
           }

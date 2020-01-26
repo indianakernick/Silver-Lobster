@@ -73,6 +73,7 @@
 		45BA0FFF23DD636300DB4CBB /* move entities.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "move entities.cpp"; sourceTree = "<group>"; };
 		45BA100023DD636300DB4CBB /* move entities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "move entities.hpp"; sourceTree = "<group>"; };
 		45BA100223DD6C8400DB4CBB /* dir.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dir.hpp; sourceTree = "<group>"; };
+		45BB029F23DD750600D6F8E2 /* dir set.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "dir set.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +156,7 @@
 				4508C82A23DD2C7F0029A03B /* texture loading.cpp */,
 				4508C82B23DD2C7F0029A03B /* texture loading.hpp */,
 				45BA100223DD6C8400DB4CBB /* dir.hpp */,
+				45BB029F23DD750600D6F8E2 /* dir set.hpp */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
