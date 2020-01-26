@@ -53,6 +53,9 @@ public:
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     renderWorld(renderer.get(), sprites.get(), world, light);
+    const SDL_Rect srcRect = {459, 0, 16, 16};
+    const SDL_Rect dstRect = {16 * player.x, 16 * player.y, 16, 16};
+    SDL_CHECK(SDL_RenderCopy(renderer.get(), sprites.get(), &srcRect, &dstRect));
     SDL_RenderPresent(renderer.get());
   }
   
@@ -72,8 +75,30 @@ public:
     initializeWorld(world, 31, 31);
     initializeLight(light, 31, 31);
     generateTerrain(world, genParams);
-    // updateLight(light, world, {12, 1}, visParams);
-    illuminate(light);
+    updateLight(light, world, player, visParams);
+    // illuminate(light);
+  }
+  
+  void input(const SDL_Scancode key) {
+    switch (key) {
+      case SDL_SCANCODE_UP:
+        --player.y;
+        break;
+      case SDL_SCANCODE_RIGHT:
+        ++player.x;
+        break;
+      case SDL_SCANCODE_DOWN:
+        ++player.y;
+        break;
+      case SDL_SCANCODE_LEFT:
+        --player.x;
+        break;
+      default:
+        return;
+    }
+    
+    updateLight(light, world, player, {-1});
+    render();
   }
   
   void run() {
@@ -83,6 +108,8 @@ public:
       while (SDL_PollEvent(&e)) {
         if (e.type == SDL_QUIT) {
           running = false;
+        } else if (e.type == SDL_KEYDOWN) {
+          input(e.key.keysym.scancode);
         }
       }
       
@@ -96,6 +123,7 @@ private:
   SDL::Texture sprites;
   World world;
   Light light;
+  gfx::Point player = {12, 1};
 };
 
 int main() {

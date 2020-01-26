@@ -107,12 +107,11 @@
 			children = (
 				45B9F6E423DD3B1B00CA9021 /* Utilities */,
 				4508C81A23DBEFA20029A03B /* world.hpp */,
+				4508C81E23DC09320029A03B /* light.hpp */,
 				4508C81B23DBEFFE0029A03B /* world generation.cpp */,
 				4508C81C23DBEFFE0029A03B /* world generation.hpp */,
-				4508C81E23DC09320029A03B /* light.hpp */,
 				4508C81F23DC0A380029A03B /* vision.cpp */,
 				4508C82023DC0A380029A03B /* vision.hpp */,
-				4508C82223DC27A30029A03B /* image.hpp */,
 				4508C82723DD26770029A03B /* world rendering.cpp */,
 				4508C82823DD26770029A03B /* world rendering.hpp */,
 			);
@@ -138,6 +137,7 @@
 		45B9F6E423DD3B1B00CA9021 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				4508C82223DC27A30029A03B /* image.hpp */,
 				4508C82E23DD2CE30029A03B /* stb_image.c */,
 				4508C82D23DD2CC90029A03B /* stb_image.h */,
 				4508C81823DAA4E80029A03B /* sdl check.hpp */,
