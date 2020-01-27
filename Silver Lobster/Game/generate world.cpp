@@ -14,6 +14,7 @@
 #include "dir set.hpp"
 #include <unordered_set>
 #include <unordered_map>
+#include "dir to point.hpp"
 #include <Graphics/fill.hpp>
 #include <Graphics/compare.hpp>
 #include <entt/entity/registry.hpp>
@@ -38,17 +39,6 @@ using IntDist = std::uniform_int_distribution<int>;
 
 gfx::Rect addMargin(const gfx::Rect rect) {
   return {rect.p - 1, rect.s + 2};
-}
-
-gfx::Point toPoint(const Dir dir, const int mul = 1) {
-  switch (dir) {
-    case Dir::none:  return {0, 0};
-    case Dir::up:    return {0, -1 * mul};
-    case Dir::right: return {1 * mul, 0};
-    case Dir::down:  return {0, 1 * mul};
-    case Dir::left:  return {-1 * mul, 0};
-    default: assert(false);
-  }
 }
 
 class Generator {
@@ -125,8 +115,8 @@ private:
   }
   
   bool canCarve(const gfx::Point pos, const Dir dir) {
-    if (!tiles.contains(pos + toPoint(dir, 3))) return false;
-    return tiles.ref(pos + toPoint(dir, 2)) == Tile::wall;
+    if (!tiles.contains(pos + toPoint(dir) * 3)) return false;
+    return tiles.ref(pos + toPoint(dir) * 2) == Tile::wall;
   }
   
   void growMaze(const gfx::Point start, const GenParams &params) {
@@ -161,9 +151,9 @@ private:
         }
 
         carve(cell + toPoint(dir), Tile::path);
-        carve(cell + toPoint(dir, 2), Tile::path);
+        carve(cell + toPoint(dir) * 2, Tile::path);
 
-        cells.push_back(cell + toPoint(dir, 2));
+        cells.push_back(cell + toPoint(dir) * 2);
         lastDir = dir;
       } else {
         cells.pop_back();

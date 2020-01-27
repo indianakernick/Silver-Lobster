@@ -9,8 +9,10 @@
 #ifndef position_hpp
 #define position_hpp
 
+#include <Graphics/geometry.hpp>
+
 struct Position {
-  int x, y;
+  gfx::Point p;
 };
 
 #endif

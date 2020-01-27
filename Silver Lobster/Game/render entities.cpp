@@ -20,7 +20,7 @@ void renderEntities(const entt::registry &reg) {
   auto view = reg.view<const Position, const Sprite>();
   view.each([&](auto pos, auto sprite) {
     const SDL_Rect srcRect = {sprite.x, sprite.y, 16, 16};
-    const SDL_Rect dstRect = {pos.x * 16, pos.y * 16, 16, 16};
+    const SDL_Rect dstRect = {pos.p.x * 16, pos.p.y * 16, 16, 16};
     SDL_CHECK(SDL_RenderCopy(renderer.ren, renderer.tex, &srcRect, &dstRect));
   });
 }

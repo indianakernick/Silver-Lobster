@@ -222,7 +222,7 @@ void updateLight(entt::registry &reg) {
   reg.view<Position, UpdateLight>().less([&](auto pos) {
     Vision vision{reg.ctx<Light>(), reg.ctx<World>()};
     const VisParams params = {-1};
-    vision.update({pos.x, pos.y}, params);
+    vision.update(pos.p, params);
   });
   reg.reset<UpdateLight>();
 }

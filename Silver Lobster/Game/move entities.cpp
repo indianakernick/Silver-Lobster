@@ -9,48 +9,31 @@
 #include "move entities.hpp"
 
 #include "tags.hpp"
+#include "world.hpp"
 #include "intents.hpp"
 #include "position.hpp"
+#include "dir to point.hpp"
 #include <entt/entity/registry.hpp>
 
 void moveEntities(entt::registry &reg) {
-  reg.view<Position, Move>().each([](auto &pos, auto move) {
-    switch (move.dir) {
-      case Dir::up:
-        --pos.y;
+  const gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
+  reg.view<Position, Move>().each([&](entt::entity e, auto &pos, auto move) {
+    const gfx::Point newPos = pos.p + toPoint(move.dir);
+    if (pos.p == newPos) return;
+    if (!tiles.contains(newPos)) return;
+    switch (tiles.ref(newPos)) {
+      case Tile::wall:
+      case Tile::closed_door:
+        return;
+      case Tile::path:
+      case Tile::room:
+      case Tile::open_door:
+      case Tile::stairs:
+        pos.p = newPos;
         break;
-      case Dir::up_right:
-        ++pos.x;
-        --pos.y;
-        break;
-      case Dir::right:
-        ++pos.x;
-        break;
-      case Dir::down_right:
-        ++pos.x;
-        ++pos.y;
-        break;
-      case Dir::down:
-        ++pos.y;
-        break;
-      case Dir::down_left:
-        --pos.x;
-        ++pos.y;
-        break;
-      case Dir::left:
-        --pos.x;
-        break;
-      case Dir::up_left:
-        --pos.x;
-        --pos.y;
-        break;
-      case Dir::none:
-        break; // rest
     }
-  });
-  reg.view<Player, Move>().less([&](entt::entity player, auto move) {
-    if (move.dir != Dir::none) {
-      reg.assign<UpdateLight>(player);
+    if (reg.has<Player>(e)) {
+      reg.assign<UpdateLight>(e);
     }
   });
   reg.reset<Move>();
