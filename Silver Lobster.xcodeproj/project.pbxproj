@@ -20,7 +20,9 @@
 		45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B9F6E123DD386000CA9021 /* sdl delete.cpp */; };
 		45BA0FF723DD4C5E00DB4CBB /* render entities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0FF523DD4C5E00DB4CBB /* render entities.cpp */; };
 		45BA0FFE23DD5FF300DB4CBB /* handle input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0FFC23DD5FF300DB4CBB /* handle input.cpp */; };
-		45BA100123DD636400DB4CBB /* move entities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0FFF23DD636300DB4CBB /* move entities.cpp */; };
+		45BB02A323DEA0C700D6F8E2 /* game loop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02A123DEA0C700D6F8E2 /* game loop.cpp */; };
+		45BB02B023DEB7C200D6F8E2 /* action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02AE23DEB7C200D6F8E2 /* action.cpp */; };
+		45BB02B323DEBB1700D6F8E2 /* move action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02B123DEBB1700D6F8E2 /* move action.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -70,11 +72,18 @@
 		45BA0FFB23DD5F1A00DB4CBB /* intents.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = intents.hpp; sourceTree = "<group>"; };
 		45BA0FFC23DD5FF300DB4CBB /* handle input.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "handle input.cpp"; sourceTree = "<group>"; };
 		45BA0FFD23DD5FF300DB4CBB /* handle input.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "handle input.hpp"; sourceTree = "<group>"; };
-		45BA0FFF23DD636300DB4CBB /* move entities.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "move entities.cpp"; sourceTree = "<group>"; };
-		45BA100023DD636300DB4CBB /* move entities.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "move entities.hpp"; sourceTree = "<group>"; };
 		45BA100223DD6C8400DB4CBB /* dir.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = dir.hpp; sourceTree = "<group>"; };
 		45BB029F23DD750600D6F8E2 /* dir set.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "dir set.hpp"; sourceTree = "<group>"; };
 		45BB02A023DE7B2500D6F8E2 /* dir to point.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "dir to point.hpp"; sourceTree = "<group>"; };
+		45BB02A123DEA0C700D6F8E2 /* game loop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "game loop.cpp"; sourceTree = "<group>"; };
+		45BB02A223DEA0C700D6F8E2 /* game loop.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "game loop.hpp"; sourceTree = "<group>"; };
+		45BB02A423DEA3A500D6F8E2 /* speed.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = speed.hpp; sourceTree = "<group>"; };
+		45BB02A823DEA64900D6F8E2 /* turn.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = turn.hpp; sourceTree = "<group>"; };
+		45BB02AE23DEB7C200D6F8E2 /* action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = action.cpp; sourceTree = "<group>"; };
+		45BB02AF23DEB7C200D6F8E2 /* action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = action.hpp; sourceTree = "<group>"; };
+		45BB02B123DEBB1700D6F8E2 /* move action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "move action.cpp"; sourceTree = "<group>"; };
+		45BB02B223DEBB1700D6F8E2 /* move action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "move action.hpp"; sourceTree = "<group>"; };
+		45BB02B423DEBF7A00D6F8E2 /* next action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "next action.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +131,7 @@
 		4508C80623DA88FE0029A03B /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				45BB02AD23DEB7B300D6F8E2 /* Actions */,
 				45BA0FF323DD4A9600DB4CBB /* Components */,
 				45BA0FF223DD4A7700DB4CBB /* Systems */,
 				45B9F6E423DD3B1B00CA9021 /* Utilities */,
@@ -176,8 +186,8 @@
 				4508C81C23DBEFFE0029A03B /* generate world.hpp */,
 				45BA0FFC23DD5FF300DB4CBB /* handle input.cpp */,
 				45BA0FFD23DD5FF300DB4CBB /* handle input.hpp */,
-				45BA0FFF23DD636300DB4CBB /* move entities.cpp */,
-				45BA100023DD636300DB4CBB /* move entities.hpp */,
+				45BB02A123DEA0C700D6F8E2 /* game loop.cpp */,
+				45BB02A223DEA0C700D6F8E2 /* game loop.hpp */,
 			);
 			name = Systems;
 			sourceTree = "<group>";
@@ -192,8 +202,22 @@
 				45BA0FF923DD4CE900DB4CBB /* position.hpp */,
 				45BA0FFA23DD587500DB4CBB /* tags.hpp */,
 				45BA0FFB23DD5F1A00DB4CBB /* intents.hpp */,
+				45BB02A423DEA3A500D6F8E2 /* speed.hpp */,
+				45BB02A823DEA64900D6F8E2 /* turn.hpp */,
+				45BB02B423DEBF7A00D6F8E2 /* next action.hpp */,
 			);
 			name = Components;
+			sourceTree = "<group>";
+		};
+		45BB02AD23DEB7B300D6F8E2 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				45BB02AE23DEB7C200D6F8E2 /* action.cpp */,
+				45BB02AF23DEB7C200D6F8E2 /* action.hpp */,
+				45BB02B123DEBB1700D6F8E2 /* move action.cpp */,
+				45BB02B223DEBB1700D6F8E2 /* move action.hpp */,
+			);
+			name = Actions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,13 +293,15 @@
 			files = (
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
 				45BA0FF723DD4C5E00DB4CBB /* render entities.cpp in Sources */,
+				45BB02A323DEA0C700D6F8E2 /* game loop.cpp in Sources */,
+				45BB02B023DEB7C200D6F8E2 /* action.cpp in Sources */,
 				4508C81D23DBEFFE0029A03B /* generate world.cpp in Sources */,
 				4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */,
+				45BB02B323DEBB1700D6F8E2 /* move action.cpp in Sources */,
 				4508C82923DD26770029A03B /* render world.cpp in Sources */,
 				45BA0FFE23DD5FF300DB4CBB /* handle input.cpp in Sources */,
 				45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */,
 				4508C82123DC0A380029A03B /* update light.cpp in Sources */,
-				45BA100123DD636400DB4CBB /* move entities.cpp in Sources */,
 				4508C82F23DD2CE30029A03B /* stb_image.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

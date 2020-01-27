@@ -9,16 +9,16 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include "Game/tags.hpp"
+#include "Game/speed.hpp"
 #include "Game/sprite.hpp"
 #include "Game/intents.hpp"
 #include "Game/renderer.hpp"
 #include "Game/position.hpp"
+#include "Game/game loop.hpp"
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
 #include "Game/update light.hpp"
-#include "Game/render world.hpp"
 #include "Game/handle input.hpp"
-#include "Game/move entities.hpp"
 #include "Game/generate world.hpp"
 #include <entt/entity/registry.hpp>
 #include "Game/render entities.hpp"
@@ -61,8 +61,7 @@ public:
   void render() {
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
-    renderWorld(reg);
-    renderEntities(reg);
+    renderGame(reg);
     SDL_RenderPresent(renderer.get());
   }
   
@@ -72,9 +71,10 @@ public:
     reg.assign<Position>(player, 12, 1);
     reg.assign<Sprite>(player, 459, 0);
     reg.assign<UpdateLight>(player);
+    reg.assign<Speed>(player, Speed::max);
   
-    initializeWorld(reg, 31, 31);
-    initializeLight(reg, 31, 31);
+    initializeWorld(reg, 63, 31);
+    initializeLight(reg, 63, 31);
     generateTerrain(reg);
     updateLight(reg);
     // illuminate(reg);
@@ -88,14 +88,11 @@ public:
         if (e.type == SDL_QUIT) {
           running = false;
         } else if (e.type == SDL_KEYDOWN) {
-          if (handleKeyDown(reg, e.key.keysym.scancode)) {
-            moveEntities(reg);
-            updateLight(reg);
-            render();
-          }
+          handleKeyDown(reg, e.key.keysym.scancode);
         }
       }
-      SDL_Delay(10);
+      stepGame(reg);
+      render();
     } while (running);
   }
   

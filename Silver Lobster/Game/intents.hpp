@@ -11,10 +11,6 @@
 
 #include "dir.hpp"
 
-struct Move {
-  Dir dir;
-};
-
 struct UpdateLight {};
 
 #endif

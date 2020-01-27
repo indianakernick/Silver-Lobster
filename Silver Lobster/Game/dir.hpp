@@ -10,6 +10,7 @@
 #define dir_hpp
 
 #include <cstdint>
+#include <cassert>
 
 enum class Dir : uint8_t {
   up,

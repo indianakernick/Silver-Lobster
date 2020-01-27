@@ -10,13 +10,15 @@
 
 #include "tags.hpp"
 #include "intents.hpp"
+#include "move action.hpp"
+#include "next action.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
 
 void setMove(entt::registry &reg, const Dir dir) {
   reg.view<Player>().less([&](entt::entity player) {
-    reg.assign<Move>(player, dir);
+    reg.assign_or_replace<NextAction>(player, std::make_unique<MoveAction>(dir));
   });
 }
 
