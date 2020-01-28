@@ -25,7 +25,7 @@ Outcome MoveAction::apply(entt::registry &reg, const entt::entity e) {
   if (!tiles.contains(newPos)) return false;
   switch (tiles.ref(newPos)) {
     case Tile::closed_door:
-      return std::make_unique<OpenDoorAction>();
+      return std::make_unique<OpenDoorAction>(dir);
     case Tile::wall:
       return false;
     case Tile::path:

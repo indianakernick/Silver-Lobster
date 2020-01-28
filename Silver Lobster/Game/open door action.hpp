@@ -9,11 +9,18 @@
 #ifndef open_door_action_hpp
 #define open_door_action_hpp
 
+#include "dir.hpp"
 #include "action.hpp"
 
 class OpenDoorAction final : public Action {
 public:
+  OpenDoorAction();
+  OpenDoorAction(Dir);
+
   Outcome apply(entt::registry &, entt::entity) override;
+
+private:
+  Dir dir;
 };
 
 #endif
