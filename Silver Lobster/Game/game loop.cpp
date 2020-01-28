@@ -27,14 +27,14 @@ void stepGame(entt::registry &reg) {
   Speed &speed = speedView.get(e);
   if (speed.sum >= Speed::max) {
     if (!reg.has<NextAction>(e)) return;
-    Action *action = reg.get<NextAction>(e).next.get();
+    std::unique_ptr<Action> action = std::move(reg.get<NextAction>(e).next);
+    if (action == nullptr) return;
     while (true) {
       Outcome outcome = action->apply(reg, e);
       if (!outcome.succeeded) return;
       if (!outcome.alternative) break;
-      action = outcome.alternative.get();
+      action = std::move(outcome.alternative);
     }
-    reg.remove<NextAction>(e);
     speed.sum = speed.sum - Speed::max + speed.delta;
   } else {
     speed.sum += speed.delta;

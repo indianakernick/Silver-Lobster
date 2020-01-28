@@ -11,7 +11,6 @@
 #include "Game/tags.hpp"
 #include "Game/speed.hpp"
 #include "Game/sprite.hpp"
-#include "Game/intents.hpp"
 #include "Game/renderer.hpp"
 #include "Game/position.hpp"
 #include "Game/game loop.hpp"
@@ -70,7 +69,6 @@ public:
     reg.assign<Player>(player);
     reg.assign<Position>(player, 12, 1);
     reg.assign<Sprite>(player, 459, 0);
-    reg.assign<UpdateLight>(player);
     reg.assign<Speed>(player, Speed::max);
   
     initializeWorld(reg, 63, 31);

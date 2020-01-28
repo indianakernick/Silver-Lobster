@@ -9,9 +9,9 @@
 #include "update light.hpp"
 
 #include <cmath>
+#include "tags.hpp"
 #include "light.hpp"
 #include "world.hpp"
-#include "intents.hpp"
 #include "position.hpp"
 #include <Graphics/each.hpp>
 #include <Graphics/fill.hpp>
@@ -219,12 +219,11 @@ void initializeLight(entt::registry &reg, const int width, const int height) {
 }
 
 void updateLight(entt::registry &reg) {
-  reg.view<Position, UpdateLight>().less([&](auto pos) {
+  reg.view<Position, Player>().less([&](auto pos) {
     Vision vision{reg.ctx<Light>(), reg.ctx<World>()};
     const VisParams params = {-1};
     vision.update(pos.p, params);
   });
-  reg.reset<UpdateLight>();
 }
 
 void illuminate(entt::registry &reg) {

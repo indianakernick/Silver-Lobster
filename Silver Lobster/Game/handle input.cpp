@@ -9,17 +9,21 @@
 #include "handle input.hpp"
 
 #include "tags.hpp"
-#include "intents.hpp"
 #include "move action.hpp"
 #include "next action.hpp"
+#include "open door action.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {
 
-void setMove(entt::registry &reg, const Dir dir) {
+void setNext(entt::registry &reg, std::unique_ptr<Action> next) {
   reg.view<Player>().less([&](entt::entity player) {
-    reg.assign_or_replace<NextAction>(player, std::make_unique<MoveAction>(dir));
+    reg.assign_or_replace<NextAction>(player, std::move(next));
   });
+}
+
+void setMove(entt::registry &reg, const Dir dir) {
+  setNext(reg, std::make_unique<MoveAction>(dir));
 }
 
 }
@@ -73,6 +77,10 @@ bool handleKeyDown(entt::registry &reg, const SDL_Scancode key) {
     case SDL_SCANCODE_K:
     case SDL_SCANCODE_5:
       setMove(reg, Dir::none);
+      return true;
+    
+    case SDL_SCANCODE_D:
+      setNext(reg, std::make_unique<OpenDoorAction>());
       return true;
       
     default:

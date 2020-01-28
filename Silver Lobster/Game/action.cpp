@@ -8,8 +8,4 @@
 
 #include "action.hpp"
 
-Outcome::Outcome(const bool success)
-  : alternative{}, succeeded{success} {}
-
-Outcome::Outcome(std::unique_ptr<Action> alt)
-  : alternative{std::move(alt)}, succeeded{true} {}
+Action::~Action() = default;

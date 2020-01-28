@@ -8,11 +8,10 @@
 
 #include "move action.hpp"
 
-#include "tags.hpp"
 #include "world.hpp"
-#include "intents.hpp"
 #include "position.hpp"
 #include "dir to point.hpp"
+#include "open door action.hpp"
 #include <entt/entity/registry.hpp>
 
 MoveAction::MoveAction(const Dir dir)
@@ -25,9 +24,9 @@ Outcome MoveAction::apply(entt::registry &reg, const entt::entity e) {
   if (pos == newPos) return false;
   if (!tiles.contains(newPos)) return false;
   switch (tiles.ref(newPos)) {
-    case Tile::wall:
     case Tile::closed_door:
-      // could try to open the door
+      return std::make_unique<OpenDoorAction>();
+    case Tile::wall:
       return false;
     case Tile::path:
     case Tile::room:
@@ -35,9 +34,6 @@ Outcome MoveAction::apply(entt::registry &reg, const entt::entity e) {
     case Tile::stairs:
       pos = newPos;
       break;
-  }
-  if (reg.has<Player>(e)) {
-    reg.assign<UpdateLight>(e);
   }
   return true;
 }

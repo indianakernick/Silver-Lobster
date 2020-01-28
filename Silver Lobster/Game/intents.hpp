@@ -9,8 +9,6 @@
 #ifndef intents_hpp
 #define intents_hpp
 
-#include "dir.hpp"
 
-struct UpdateLight {};
 
 #endif

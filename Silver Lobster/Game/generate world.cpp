@@ -230,7 +230,7 @@ private:
       const gfx::Point conPos = conIter->first;
       const RegionSet conRegion = conIter->second;
 
-      tiles.ref(conPos) = Tile::open_door;
+      tiles.ref(conPos) = Tile::closed_door;
 
       RegionSet sources = applyMapping(mergeMapping, conRegion);
       const Region dest = *sources.cbegin();
@@ -259,7 +259,7 @@ private:
         }
 
         if (redundancyDist(rng) < params.connectionRedundancy) {
-          tiles.ref(con->first) = Tile::open_door;
+          tiles.ref(con->first) = Tile::closed_door;
         }
 
         con = connectors.erase(con);

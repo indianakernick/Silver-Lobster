@@ -15,8 +15,12 @@
 class Action;
 
 struct Outcome {
-  Outcome(bool);
-  Outcome(std::unique_ptr<Action>);
+  Outcome(const bool success)
+    : alternative{}, succeeded{success} {}
+  
+  template <typename A>
+  Outcome(std::unique_ptr<A> alt)
+    : alternative{std::move(alt)}, succeeded{true} {}
   
   std::unique_ptr<Action> alternative;
   bool succeeded;
@@ -24,7 +28,7 @@ struct Outcome {
 
 class Action {
 public:
-  virtual ~Action() = default;
+  virtual ~Action();
   
   virtual Outcome apply(entt::registry &, entt::entity) = 0;
 };
