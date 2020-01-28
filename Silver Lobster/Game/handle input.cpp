@@ -9,8 +9,9 @@
 #include "handle input.hpp"
 
 #include "tags.hpp"
+#include "brain.hpp"
 #include "move action.hpp"
-#include "next action.hpp"
+#include "player behaviour.hpp"
 #include "open door action.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -18,7 +19,9 @@ namespace {
 
 void setNext(entt::registry &reg, std::unique_ptr<Action> next) {
   reg.view<Player>().less([&](entt::entity player) {
-    reg.assign_or_replace<NextAction>(player, std::move(next));
+    // TODO: this is a bit sketchy
+    Behaviour *behaviour = reg.get<Brain>(player).b.get();
+    static_cast<PlayerBehaviour *>(behaviour)->inject(std::move(next));
   });
 }
 

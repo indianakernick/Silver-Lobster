@@ -10,7 +10,7 @@
 
 #include "turn.hpp"
 #include "speed.hpp"
-#include "next action.hpp"
+#include "brain.hpp"
 #include "render world.hpp"
 #include "update light.hpp"
 #include "render entities.hpp"
@@ -26,8 +26,8 @@ void stepGame(entt::registry &reg) {
   const entt::entity e = speedView[turn.i];
   Speed &speed = speedView.get(e);
   if (speed.sum >= Speed::max) {
-    if (!reg.has<NextAction>(e)) return;
-    std::unique_ptr<Action> action = std::move(reg.get<NextAction>(e).next);
+    if (!reg.has<Brain>(e)) return;
+    std::unique_ptr<Action> action = reg.get<Brain>(e).b->decide(reg, e);
     if (action == nullptr) return;
     while (true) {
       Outcome outcome = action->apply(reg, e);

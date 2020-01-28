@@ -8,11 +8,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include "Game/tags.hpp"
-#include "Game/speed.hpp"
-#include "Game/sprite.hpp"
 #include "Game/renderer.hpp"
-#include "Game/position.hpp"
 #include "Game/game loop.hpp"
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
@@ -22,6 +18,7 @@
 #include <entt/entity/registry.hpp>
 #include "Game/render entities.hpp"
 #include "Game/texture loading.hpp"
+#include "Game/Factories/player.hpp"
 
 std::string res(const char *path) {
   return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
@@ -65,12 +62,7 @@ public:
   }
   
   void initLevel() {
-    entt::entity player = reg.create();
-    reg.assign<Player>(player);
-    reg.assign<Position>(player, 12, 1);
-    reg.assign<Sprite>(player, 459, 0);
-    reg.assign<Speed>(player, Speed::max);
-  
+    makePlayer(reg);
     initializeWorld(reg, 63, 31);
     initializeLight(reg, 63, 31);
     generateTerrain(reg);
