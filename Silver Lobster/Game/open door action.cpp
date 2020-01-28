@@ -23,7 +23,8 @@ Outcome OpenDoorAction::apply(entt::registry &reg, entt::entity e) {
     Tile &tile = tiles.ref(doorPos);
     if (tile == Tile::closed_door) {
       tile = Tile::open_door;
+      return true;
     }
   }
-  return true;
+  return false;
 }
