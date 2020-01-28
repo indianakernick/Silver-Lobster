@@ -17,7 +17,7 @@
 MoveAction::MoveAction(const Dir dir)
   : dir{dir} {}
 
-Outcome MoveAction::apply(entt::registry &reg, const entt::entity e) {
+Outcome MoveAction::apply(entt::registry &reg, const entt::entity e) const {
   const gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
   gfx::Point &pos = reg.get<Position>(e).p;
   const gfx::Point newPos = pos + toPoint(dir);

@@ -34,7 +34,7 @@ bool open(const gfx::Surface<Tile> tiles, const gfx::Point pos) {
 
 }
 
-Outcome OpenDoorAction::apply(entt::registry &reg, entt::entity e) {
+Outcome OpenDoorAction::apply(entt::registry &reg, const entt::entity e) const {
   const gfx::Point pos = reg.get<Position>(e).p;
   const gfx::Surface<Tile> tiles = reg.ctx<World>().tiles;
   if (dir == Dir::none) {

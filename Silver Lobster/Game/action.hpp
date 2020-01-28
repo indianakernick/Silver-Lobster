@@ -30,7 +30,7 @@ class Action {
 public:
   virtual ~Action();
   
-  virtual Outcome apply(entt::registry &, entt::entity) = 0;
+  virtual Outcome apply(entt::registry &, entt::entity) const = 0;
 };
 
 #endif

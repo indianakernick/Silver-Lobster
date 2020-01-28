@@ -16,7 +16,7 @@ class MoveAction final : public Action {
 public:
   explicit MoveAction(Dir);
 
-  Outcome apply(entt::registry &, entt::entity) override;
+  Outcome apply(entt::registry &, entt::entity) const override;
 
 private:
   Dir dir;
