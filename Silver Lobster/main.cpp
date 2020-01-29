@@ -19,6 +19,7 @@
 #include <entt/entity/registry.hpp>
 #include "Game/render entities.hpp"
 #include "Game/texture loading.hpp"
+#include "Game/Factories/ghost.hpp"
 #include "Game/Factories/player.hpp"
 
 std::string res(const char *path) {
@@ -63,8 +64,9 @@ public:
   }
   
   void initLevel() {
-    makePlayer(reg);
+    makePlayer(reg, {12, 1});
     makeLamp(reg, {3, 3});
+    makeGhost(reg, {11, 3});
     initializeWorld(reg, {63, 31});
     initializeLight(reg, {63, 31});
     generateTerrain(reg);

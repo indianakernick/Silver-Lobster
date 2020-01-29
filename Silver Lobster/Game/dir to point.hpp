@@ -26,4 +26,26 @@ constexpr gfx::Point toPoint(const Dir dir) {
   }
 }
 
+constexpr Dir fromPoint(const gfx::Point vec) {
+  if (vec == gfx::Point{0, -1}) {
+    return Dir::up;
+  } else if (vec == gfx::Point{1, -1}) {
+    return Dir::up_right;
+  } else if (vec == gfx::Point{1, 0}) {
+    return Dir::right;
+  } else if (vec == gfx::Point{1, 1}) {
+    return Dir::down_right;
+  } else if (vec == gfx::Point{0, 1}) {
+    return Dir::down;
+  } else if (vec == gfx::Point{-1, 1}) {
+    return Dir::down_left;
+  } else if (vec == gfx::Point{-1, 0}) {
+    return Dir::left;
+  } else if (vec == gfx::Point{-1, -1}) {
+    return Dir::up_left;
+  } else {
+    return Dir::none;
+  }
+}
+
 #endif

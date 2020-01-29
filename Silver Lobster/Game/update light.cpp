@@ -281,7 +281,7 @@ public:
     }
   }
 
-  bool wasSeen() const {
+  bool visible() const {
     return seen;
   }
 
@@ -327,14 +327,10 @@ void updateVisibility(entt::registry &reg) {
   });
 }
 
-bool canSeePlayer(entt::registry &reg, const gfx::Point monsterPos) {
+bool canSee(entt::registry &reg, const gfx::Point from, const gfx::Point to) {
   gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
   gfx::Surface<const bool> lit = reg.ctx<Light>().lit;
-  gfx::Point playerPos;
-  reg.view<Position, Player>().less([&](auto pos) {
-    playerPos = pos.p;
-  });
-  MonsterVision vision{tiles, lit, playerPos};
-  vision.update(monsterPos, -1);
-  return vision.wasSeen();
+  MonsterVision vision{tiles, lit, to};
+  vision.update(from, -1);
+  return vision.visible();
 }

@@ -28,6 +28,10 @@
 		45BB02C023E015BF00D6F8E2 /* player behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02BE23E015BF00D6F8E2 /* player behaviour.cpp */; };
 		45BB02C423E0170900D6F8E2 /* player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02C223E0170900D6F8E2 /* player.cpp */; };
 		45BB02C823E1486000D6F8E2 /* lamp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02C623E1486000D6F8E2 /* lamp.cpp */; };
+		45BB02CB23E16A0100D6F8E2 /* chase behaviour.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02C923E16A0100D6F8E2 /* chase behaviour.cpp */; };
+		45BB02CE23E16A6700D6F8E2 /* rest action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02CC23E16A6700D6F8E2 /* rest action.cpp */; };
+		45BB02D123E16DB300D6F8E2 /* find path.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02CF23E16DB300D6F8E2 /* find path.cpp */; };
+		45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D223E1868500D6F8E2 /* ghost.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -98,6 +102,14 @@
 		45BB02C523E13FE600D6F8E2 /* light source.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "light source.hpp"; sourceTree = "<group>"; };
 		45BB02C623E1486000D6F8E2 /* lamp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = lamp.cpp; sourceTree = "<group>"; };
 		45BB02C723E1486000D6F8E2 /* lamp.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = lamp.hpp; sourceTree = "<group>"; };
+		45BB02C923E16A0100D6F8E2 /* chase behaviour.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "chase behaviour.cpp"; sourceTree = "<group>"; };
+		45BB02CA23E16A0100D6F8E2 /* chase behaviour.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "chase behaviour.hpp"; sourceTree = "<group>"; };
+		45BB02CC23E16A6700D6F8E2 /* rest action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "rest action.cpp"; sourceTree = "<group>"; };
+		45BB02CD23E16A6700D6F8E2 /* rest action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "rest action.hpp"; sourceTree = "<group>"; };
+		45BB02CF23E16DB300D6F8E2 /* find path.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "find path.cpp"; sourceTree = "<group>"; };
+		45BB02D023E16DB300D6F8E2 /* find path.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "find path.hpp"; sourceTree = "<group>"; };
+		45BB02D223E1868500D6F8E2 /* ghost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ghost.cpp; sourceTree = "<group>"; };
+		45BB02D323E1868500D6F8E2 /* ghost.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ghost.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +216,8 @@
 				45BA0FFD23DD5FF300DB4CBB /* handle input.hpp */,
 				45BB02A123DEA0C700D6F8E2 /* game loop.cpp */,
 				45BB02A223DEA0C700D6F8E2 /* game loop.hpp */,
+				45BB02CF23E16DB300D6F8E2 /* find path.cpp */,
+				45BB02D023E16DB300D6F8E2 /* find path.hpp */,
 			);
 			name = Systems;
 			sourceTree = "<group>";
@@ -233,6 +247,8 @@
 				45BB02B223DEBB1700D6F8E2 /* move action.hpp */,
 				45BB02B523DFF49900D6F8E2 /* open door action.cpp */,
 				45BB02B623DFF49900D6F8E2 /* open door action.hpp */,
+				45BB02CC23E16A6700D6F8E2 /* rest action.cpp */,
+				45BB02CD23E16A6700D6F8E2 /* rest action.hpp */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -244,6 +260,8 @@
 				45BB02BB23E0125B00D6F8E2 /* behaviour.hpp */,
 				45BB02BE23E015BF00D6F8E2 /* player behaviour.cpp */,
 				45BB02BF23E015BF00D6F8E2 /* player behaviour.hpp */,
+				45BB02C923E16A0100D6F8E2 /* chase behaviour.cpp */,
+				45BB02CA23E16A0100D6F8E2 /* chase behaviour.hpp */,
 			);
 			path = Behaviours;
 			sourceTree = "<group>";
@@ -255,6 +273,8 @@
 				45BB02C323E0170900D6F8E2 /* player.hpp */,
 				45BB02C623E1486000D6F8E2 /* lamp.cpp */,
 				45BB02C723E1486000D6F8E2 /* lamp.hpp */,
+				45BB02D223E1868500D6F8E2 /* ghost.cpp */,
+				45BB02D323E1868500D6F8E2 /* ghost.hpp */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -330,9 +350,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BB02CE23E16A6700D6F8E2 /* rest action.cpp in Sources */,
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
 				45BA0FF723DD4C5E00DB4CBB /* render entities.cpp in Sources */,
 				45BB02A323DEA0C700D6F8E2 /* game loop.cpp in Sources */,
+				45BB02D123E16DB300D6F8E2 /* find path.cpp in Sources */,
 				45BB02B023DEB7C200D6F8E2 /* action.cpp in Sources */,
 				4508C81D23DBEFFE0029A03B /* generate world.cpp in Sources */,
 				4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */,
@@ -345,7 +367,9 @@
 				45BA0FFE23DD5FF300DB4CBB /* handle input.cpp in Sources */,
 				45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */,
 				45BB02C823E1486000D6F8E2 /* lamp.cpp in Sources */,
+				45BB02CB23E16A0100D6F8E2 /* chase behaviour.cpp in Sources */,
 				4508C82123DC0A380029A03B /* update light.cpp in Sources */,
+				45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */,
 				4508C82F23DD2CE30029A03B /* stb_image.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -15,6 +15,6 @@
 void initializeLight(entt::registry &, gfx::Size);
 void updateLight(entt::registry &);
 void updateVisibility(entt::registry &);
-bool canSeePlayer(entt::registry &, gfx::Point);
+bool canSee(entt::registry &, gfx::Point, gfx::Point);
 
 #endif

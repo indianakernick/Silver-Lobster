@@ -17,10 +17,10 @@
 #include "player behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
-entt::entity makePlayer(entt::registry &reg) {
+entt::entity makePlayer(entt::registry &reg, const gfx::Point pos) {
   entt::entity e = reg.create();
   reg.assign<Player>(e);
-  reg.assign<Position>(e, 12, 1);
+  reg.assign<Position>(e, pos);
   reg.assign<Sprite>(e, 459, 0);
   reg.assign<Speed>(e, Speed::max);
   reg.assign<Brain>(e, std::make_unique<PlayerBehaviour>());
