@@ -15,6 +15,7 @@
 #include "Game/update light.hpp"
 #include "Game/handle input.hpp"
 #include "Game/generate world.hpp"
+#include "Game/Factories/lamp.hpp"
 #include <entt/entity/registry.hpp>
 #include "Game/render entities.hpp"
 #include "Game/texture loading.hpp"
@@ -63,11 +64,10 @@ public:
   
   void initLevel() {
     makePlayer(reg);
-    initializeWorld(reg, 63, 31);
-    initializeLight(reg, 63, 31);
+    makeLamp(reg, {3, 3});
+    initializeWorld(reg, {63, 31});
+    initializeLight(reg, {63, 31});
     generateTerrain(reg);
-    updateLight(reg);
-    // illuminate(reg);
   }
   
   void run() {
@@ -81,8 +81,11 @@ public:
           handleKeyDown(reg, e.key.keysym.scancode);
         }
       }
-      stepGame(reg);
-      render();
+      if (stepGame(reg)) {
+        render();
+      } else {
+        SDL_Delay(10);
+      }
     } while (running);
   }
   

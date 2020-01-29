@@ -8,6 +8,7 @@
 
 #include "render entities.hpp"
 
+#include "world.hpp"
 #include "sprite.hpp"
 #include "position.hpp"
 #include "renderer.hpp"
@@ -17,8 +18,10 @@
 
 void renderEntities(const entt::registry &reg) {
   auto &renderer = reg.ctx<Renderer>();
+  gfx::Surface<const Visibility> visible = reg.ctx<Sight>().visibility;
   auto view = reg.view<const Position, const Sprite>();
   view.each([&](auto pos, auto sprite) {
+    if (visible.ref(pos.p) != Visibility::visible) return;
     const SDL_Rect srcRect = {sprite.x, sprite.y, 16, 16};
     const SDL_Rect dstRect = {pos.p.x * 16, pos.p.y * 16, 16, 16};
     SDL_CHECK(SDL_RenderCopy(renderer.ren, renderer.tex, &srcRect, &dstRect));

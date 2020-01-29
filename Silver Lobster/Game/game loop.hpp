@@ -11,7 +11,7 @@
 
 #include <entt/entity/fwd.hpp>
 
-void stepGame(entt::registry &);
+bool stepGame(entt::registry &);
 void renderGame(const entt::registry &);
 
 #endif

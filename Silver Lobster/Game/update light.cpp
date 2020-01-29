@@ -10,9 +10,9 @@
 
 #include <cmath>
 #include "tags.hpp"
-#include "light.hpp"
 #include "world.hpp"
 #include "position.hpp"
+#include "light source.hpp"
 #include <Graphics/each.hpp>
 #include <Graphics/fill.hpp>
 #include <entt/entity/registry.hpp>
@@ -21,10 +21,6 @@ namespace {
 
 // Vision algorithm by Adam Milazzo
 // http://www.adammil.net/blog/v125_Roguelike_Vision_Algorithms.html
-
-struct VisParams {
-  int range;
-};
 
 struct Slope {
   unsigned y, x;
@@ -43,29 +39,26 @@ struct Slope {
   }
 };
 
+template <typename Policy>
 class Vision {
 public:
-  Vision(Light &light, const World &world)
-    : visible{light.visibility}, tiles{world.tiles} {
-    assert(visible.size() == tiles.size());
+  ~Vision() {
+    static_assert(std::is_base_of_v<Vision, Policy>);
   }
-  
-  void update(const gfx::Point origin, const VisParams &params) {
-    clear();
-    setVisible(origin.x, origin.y);
+
+  void update(const gfx::Point origin, const int range) {
+    that()->setVisible(origin.x, origin.y);
     for (unsigned octant = 0; octant != 8; ++octant) {
-      update(octant, origin, params.range, 1, {1, 1}, {0, 1});
+      update(octant, origin, range, 1, {1, 1}, {0, 1});
     }
   }
   
 private:
-  gfx::Surface<Visibility> visible;
-  gfx::Surface<const Tile> tiles;
-  
-  void clear() {
-    gfx::each(visible, [](Visibility &vis) {
-      vis = (vis == Visibility::visible ? Visibility::invisible : vis);
-    });
+  Policy *that() {
+    return static_cast<Policy *>(this);
+  }
+  const Policy *that() const {
+    return static_cast<const Policy *>(this);
   }
   
   static int getDistance(const unsigned x, const unsigned y) {
@@ -86,17 +79,17 @@ private:
     }
   }
   
-  bool blocksLight(const unsigned x, const unsigned y, const unsigned octant, gfx::Point origin) {
+  bool blocksLight(const unsigned x, const unsigned y, const unsigned octant, gfx::Point origin) const {
     origin += octantOffset(x, y, octant);
-    return blocksLight(origin.x, origin.y);
+    return that()->blocksLight(origin.x, origin.y);
   }
   
   void setVisible(const unsigned x, const unsigned y, const unsigned octant, gfx::Point origin) {
     origin += octantOffset(x, y, octant);
-    setVisible(origin.x, origin.y);
+    that()->setVisible(origin.x, origin.y);
   }
   
-  bool blocksLight(const unsigned x, const unsigned y) {
+  /*bool blocksLight(const unsigned x, const unsigned y) {
     if (!tiles.contains(x, y)) {
       return true;
     }
@@ -116,7 +109,7 @@ private:
     if (visible.contains(x, y)) {
       visible.ref(x, y) = Visibility::visible;
     }
-  }
+  }*/
   
   void update(
     const unsigned octant,
@@ -208,24 +201,150 @@ private:
   }
 };
 
+bool opaque(const Tile tile) {
+  switch (tile) {
+    case Tile::open_door:
+    case Tile::room:
+    case Tile::path:
+    case Tile::stairs:
+      return false;
+    case Tile::wall:
+    case Tile::closed_door:
+      return true;
+  }
 }
 
-void initializeLight(entt::registry &reg, const int width, const int height) {
-  assert(width > 1);
-  assert(height > 1);
+bool opaque(const gfx::Surface<const Tile> tiles, const int x, const int y) {
+  if (tiles.contains(x, y)) {
+    return opaque(tiles.ref(x, y));
+  } else {
+    return true;
+  }
+}
+
+class LightVision final : public Vision<LightVision> {
+public:
+  LightVision(gfx::Surface<const Tile> tiles, gfx::Surface<bool> lit)
+    : tiles{tiles}, lit{lit} {
+    assert(tiles.size() == lit.size());
+  }
+
+  bool blocksLight(const unsigned x, const unsigned y) const {
+    return opaque(tiles, x, y);
+  }
+  
+  void setVisible(const unsigned x, const unsigned y) {
+    if (lit.contains(x, y)) {
+      lit.ref(x, y) = true;
+    }
+  }
+
+private:
+  gfx::Surface<const Tile> tiles;
+  gfx::Surface<bool> lit;
+};
+
+class PlayerVision final : public Vision<PlayerVision> {
+public:
+  PlayerVision(
+    const gfx::Surface<const Tile> tiles,
+    const gfx::Surface<const bool> lit,
+    const gfx::Surface<Visibility> visible
+  ) : tiles{tiles}, lit{lit}, visible{visible} {
+    assert(tiles.size() == lit.size() && lit.size() == visible.size());
+  }
+  
+  bool blocksLight(const unsigned x, const unsigned y) const {
+    return opaque(tiles, x, y);
+  }
+  
+  void setVisible(const unsigned x, const unsigned y) {
+    if (lit.contains(x, y)) {
+      if (lit.ref(x, y)) {
+        visible.ref(x, y) = Visibility::visible;
+      }
+    }
+  }
+  
+private:
+  gfx::Surface<const Tile> tiles;
+  gfx::Surface<const bool> lit;
+  gfx::Surface<Visibility> visible;
+};
+
+class MonsterVision final : public Vision<MonsterVision> {
+public:
+  MonsterVision(
+    const gfx::Surface<const Tile> tiles,
+    const gfx::Surface<const bool> lit,
+    const gfx::Point playerPos
+  ) : tiles{tiles}, lit{lit}, playerPos{playerPos} {}
+
+  bool blocksLight(const unsigned x, const unsigned y) const {
+    return opaque(tiles, x, y);
+  }
+  
+  void setVisible(const unsigned x, const unsigned y) {
+    if (playerPos.x == int(x) && playerPos.y == int(y)) {
+      assert(lit.contains(x, y));
+      seen = seen || lit.ref(x, y);
+    }
+  }
+
+  bool wasSeen() const {
+    return seen;
+  }
+
+private:
+  gfx::Surface<const Tile> tiles;
+  gfx::Surface<const bool> lit;
+  gfx::Point playerPos;
+  bool seen;
+};
+
+}
+
+void initializeLight(entt::registry &reg, const gfx::Size size) {
+  assert(size.w > 1 && size.h > 1);
   Light &light = reg.set<Light>();
-  light.visibility = {width, height};
-  gfx::fill(light.visibility.view(), Visibility::unexplored);
+  light.lit = {size};
+  gfx::fill(light.lit.view(), false);
+  Sight &sight = reg.set<Sight>();
+  sight.visibility = {size};
+  gfx::fill(sight.visibility.view(), Visibility::unexplored);
 }
 
 void updateLight(entt::registry &reg) {
-  reg.view<Position, Player>().less([&](auto pos) {
-    Vision vision{reg.ctx<Light>(), reg.ctx<World>()};
-    const VisParams params = {-1};
-    vision.update(pos.p, params);
+  gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
+  gfx::Surface<bool> lit = reg.ctx<Light>().lit;
+  gfx::fill(lit, false);
+  reg.view<Position, LightSource>().each([&](auto pos, auto src) {
+    LightVision vision{tiles, lit};
+    vision.update(pos.p, src.radius);
   });
 }
 
-void illuminate(entt::registry &reg) {
-  gfx::fill(reg.ctx<Light>().visibility.view(), Visibility::visible);
+void updateVisibility(entt::registry &reg) {
+  gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
+  gfx::Surface<const bool> lit = reg.ctx<Light>().lit;
+  gfx::Surface<Visibility> visible = reg.ctx<Sight>().visibility;
+  gfx::each(visible, [](Visibility &vis) {
+    vis = (vis == Visibility::visible ? Visibility::invisible : vis);
+  });
+  reg.view<Position, Player>().less([&](auto pos) {
+    PlayerVision vision{tiles, lit, visible};
+    vision.update(pos.p, -1);
+  });
+}
+
+bool canSeePlayer(entt::registry &reg, const gfx::Point monsterPos) {
+  gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
+  gfx::Surface<const bool> lit = reg.ctx<Light>().lit;
+  gfx::Point playerPos;
+  reg.view<Position, Player>().less([&](auto pos) {
+    playerPos = pos.p;
+  });
+  MonsterVision vision{tiles, lit, playerPos};
+  vision.update(monsterPos, -1);
+  return vision.wasSeen();
 }

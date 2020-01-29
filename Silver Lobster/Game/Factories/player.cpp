@@ -13,6 +13,7 @@
 #include "speed.hpp"
 #include "sprite.hpp"
 #include "position.hpp"
+#include "light source.hpp"
 #include "player behaviour.hpp"
 #include <entt/entity/registry.hpp>
 
@@ -23,5 +24,6 @@ entt::entity makePlayer(entt::registry &reg) {
   reg.assign<Sprite>(e, 459, 0);
   reg.assign<Speed>(e, Speed::max);
   reg.assign<Brain>(e, std::make_unique<PlayerBehaviour>());
+  reg.assign<LightSource>(e, 1);
   return e;
 }

@@ -10,8 +10,9 @@
 #define generate_world_hpp
 
 #include <entt/entity/fwd.hpp>
+#include <Graphics/geometry.hpp>
 
-void initializeWorld(entt::registry &, int, int);
+void initializeWorld(entt::registry &, gfx::Size);
 void generateTerrain(entt::registry &);
 
 #endif

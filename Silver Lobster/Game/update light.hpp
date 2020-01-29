@@ -10,9 +10,11 @@
 #define update_light_hpp
 
 #include <entt/entity/fwd.hpp>
+#include <Graphics/geometry.hpp>
 
-void initializeLight(entt::registry &, int, int);
+void initializeLight(entt::registry &, gfx::Size);
 void updateLight(entt::registry &);
-void illuminate(entt::registry &);
+void updateVisibility(entt::registry &);
+bool canSeePlayer(entt::registry &, gfx::Point);
 
 #endif

@@ -16,7 +16,7 @@
 #include "render entities.hpp"
 #include <entt/entity/registry.hpp>
 
-void stepGame(entt::registry &reg) {
+bool stepGame(entt::registry &reg) {
   Turn &turn = reg.ctx_or_set<Turn>(size_t{});
   auto speedView = reg.view<Speed>();
   if (turn.i >= speedView.size()) {
@@ -26,12 +26,12 @@ void stepGame(entt::registry &reg) {
   const entt::entity e = speedView[turn.i];
   Speed &speed = speedView.get(e);
   if (speed.sum >= Speed::max) {
-    if (!reg.has<Brain>(e)) return;
+    if (!reg.has<Brain>(e)) return false;
     std::unique_ptr<Action> action = reg.get<Brain>(e).b->decide(reg, e);
-    if (action == nullptr) return;
+    if (action == nullptr) return false;
     while (true) {
       Outcome outcome = action->apply(reg, e);
-      if (!outcome.succeeded) return;
+      if (!outcome.succeeded) return false;
       if (!outcome.alternative) break;
       action = std::move(outcome.alternative);
     }
@@ -42,6 +42,8 @@ void stepGame(entt::registry &reg) {
   ++turn.i;
   
   updateLight(reg);
+  updateVisibility(reg);
+  return true;
 }
 
 void renderGame(const entt::registry &reg) {

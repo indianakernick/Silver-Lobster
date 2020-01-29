@@ -20,11 +20,25 @@ enum class Tile : uint8_t {
   stairs
 };
 
+enum class Visibility : uint8_t {
+  unexplored,
+  invisible,
+  visible
+};
+
 using Region = uint8_t;
 
 struct World {
   Image<Tile> tiles;
   Image<Region> regions;
+};
+
+struct Sight {
+  Image<Visibility> visibility;
+};
+
+struct Light {
+  Image<bool> lit;
 };
 
 #endif

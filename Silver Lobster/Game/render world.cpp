@@ -8,7 +8,6 @@
 
 #include "render world.hpp"
 
-#include "light.hpp"
 #include "world.hpp"
 #include "renderer.hpp"
 #include "sdl check.hpp"
@@ -46,7 +45,7 @@ SDL_Rect sourceRect(const Tile tile) {
 
 void renderWorld(const entt::registry &reg) {
   const gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
-  const gfx::Surface<const Visibility> visible = reg.ctx<Light>().visibility;
+  const gfx::Surface<const Visibility> visible = reg.ctx<Sight>().visibility;
   auto renderer = reg.ctx<Renderer>();
   for (int y = 0; y != tiles.height(); ++y) {
     for (int x = 0; x != tiles.width(); ++x) {

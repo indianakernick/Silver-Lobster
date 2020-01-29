@@ -298,12 +298,12 @@ private:
 
 }
 
-void initializeWorld(entt::registry &reg, const int width, const int height) {
-  assert(width > 1 && width % 2 == 1);
-  assert(height > 1 && height % 2 == 1);
+void initializeWorld(entt::registry &reg, const gfx::Size size) {
+  assert(size.w > 1 && size.w % 2 == 1);
+  assert(size.h > 1 && size.h % 2 == 1);
   World &world = reg.set<World>();
-  world.tiles = {width, height};
-  world.regions = {width, height};
+  world.tiles = {size};
+  world.regions = {size};
 }
 
 void generateTerrain(entt::registry &reg) {
