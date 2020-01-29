@@ -49,8 +49,20 @@ public:
   void update(const gfx::Point origin, const int range) {
     that()->setVisible(origin.x, origin.y);
     for (unsigned octant = 0; octant != 8; ++octant) {
-      update(octant, origin, range, 1, {1, 1}, {0, 1});
+      update(octant, origin, range);
     }
+    // 0 right - up_right
+    // 1 up_right - up
+    // 2 up - up_left
+    // 3 up_left - left
+    // 4 left - down_left
+    // 5 down_left - down
+    // 6 down - down_right
+    // 7 down_right - right
+  }
+  
+  void update(const unsigned octant, const gfx::Point origin, const int range) {
+    update(octant, origin, range, 1, {1, 1}, {0, 1});
   }
   
 private:
@@ -88,28 +100,6 @@ private:
     origin += octantOffset(x, y, octant);
     that()->setVisible(origin.x, origin.y);
   }
-  
-  /*bool blocksLight(const unsigned x, const unsigned y) {
-    if (!tiles.contains(x, y)) {
-      return true;
-    }
-    switch (tiles.ref(x, y)) {
-      case Tile::open_door:
-      case Tile::room:
-      case Tile::path:
-      case Tile::stairs:
-        return false;
-      case Tile::wall:
-      case Tile::closed_door:
-        return true;
-    }
-  }
-  
-  void setVisible(const unsigned x, const unsigned y) {
-    if (visible.contains(x, y)) {
-      visible.ref(x, y) = Visibility::visible;
-    }
-  }*/
   
   void update(
     const unsigned octant,
