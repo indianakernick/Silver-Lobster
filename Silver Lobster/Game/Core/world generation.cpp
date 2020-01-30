@@ -9,7 +9,7 @@
 #include "world generation.hpp"
 
 #include <set>
-#include <random>
+#include "rng.hpp"
 #include "world.hpp"
 #include "dir set.hpp"
 #include <unordered_set>
@@ -24,7 +24,6 @@
 namespace {
 
 struct GenParams {
-  uint64_t seed;
   int roomSizeMin;          // minimum size of a room
   int roomSizeMax;          // maximum size of a room
   int roomDensity;          // number of attempts to place rooms
@@ -34,17 +33,14 @@ struct GenParams {
 
 constexpr Region null_region = ~Region{};
 
-using IntDist = std::uniform_int_distribution<int>;
-
 class Generator {
 public:
-  explicit Generator(World &world)
-    : tiles{world.tiles}, regions{world.regions}, rooms{world.rooms} {}
+  Generator(const uint64_t seed, World &world)
+    : rng{seed}, tiles{world.tiles}, regions{world.regions}, rooms{world.rooms} {}
 
   void generate(const GenParams &params) {
     carve(tiles.rect(), Tile::wall);
     rooms.clear();
-    rng.seed(params.seed);
     placeRooms(params);
     placeExit();
     growMazes(params);
@@ -53,10 +49,10 @@ public:
   }
 
 private:
+  RNG rng;
   gfx::Surface<Tile> tiles;
   gfx::Surface<Region> regions;
   std::vector<gfx::Rect> &rooms;
-  std::mt19937_64 rng;
   Region currentRegion = null_region;
   
   void startRegion() {
@@ -79,18 +75,15 @@ private:
   // ------------------------------- rooms ---------------------------------- //
   
   void placeRooms(const GenParams &params) {
-    assert(params.roomSizeMin > 0 && params.roomSizeMin % 2 == 1);
-    assert(params.roomSizeMax > params.roomSizeMin && params.roomSizeMax % 2 == 1);
+    assert(params.roomSizeMin % 2 == 1);
+    assert(params.roomSizeMax % 2 == 1);
     assert(params.roomSizeMin <= tiles.width() - 2);
     assert(params.roomSizeMin <= tiles.height() - 2);
     assert(params.roomDensity > 0);
-
-    IntDist sizeDist{params.roomSizeMin / 2, params.roomSizeMax / 2};
+    
     for (int d = params.roomDensity; d--; ) {
-      const gfx::Size size{sizeDist(rng) * 2 + 1, sizeDist(rng) * 2 + 1};
-      IntDist xDist{0, (tiles.width() - size.w) / 2 - 1};
-      IntDist yDist{0, (tiles.height() - size.h) / 2 - 1};
-      const gfx::Point pos{xDist(rng) * 2 + 1, yDist(rng) * 2 + 1};
+      const gfx::Size size = rng.oddSize(params.roomSizeMin, params.roomSizeMax);
+      const gfx::Point pos = rng.oddPoint(tiles.size() - size);
       const gfx::Rect rect{pos, size};
 
       bool fit = true;
@@ -133,9 +126,6 @@ private:
   }
   
   void growMaze(const gfx::Point start, const GenParams &params) {
-    assert(0 <= params.pathStraightness && params.pathStraightness <= 100);
-    
-    IntDist straightDist{0, 99};
     std::vector<gfx::Point> cells;
     Dir lastDir = Dir::none;
     
@@ -157,7 +147,7 @@ private:
         Dir dir = randomDir(unmadeCells);
         if (lastDir != Dir::none) {
           if (unmadeCells.test(lastDir)) {
-            if (straightDist(rng) < params.pathStraightness) {
+            if (rng.percent(params.pathStraightness)) {
               dir = lastDir;
             }
           }
@@ -229,12 +219,9 @@ private:
   }
   
   void connectRegions(const GenParams &params) {
-    assert(0 <= params.connectionRedundancy && params.connectionRedundancy <= 100);
-
     ConnectorMap connectors = findConnectors();
     RegionMap mergeMapping;
     BigRegionSet openRegions;
-    IntDist redundancyDist{0, 99};
 
     for (Region r = 0; r <= currentRegion; ++r) {
       mergeMapping.insert({r, r});
@@ -274,8 +261,8 @@ private:
           ++con;
           continue;
         }
-
-        if (redundancyDist(rng) < params.connectionRedundancy) {
+         
+        if (rng.percent(params.connectionRedundancy)) {
           tiles.ref(con->first) = Tile::closed_door;
         }
 
@@ -325,13 +312,12 @@ void initializeWorld(entt::registry &reg, const gfx::Size size) {
 
 void generateTerrain(entt::registry &reg, const uint64_t seed) {
   const GenParams params = {
-    .seed = seed,
     .roomSizeMin = 3,
     .roomSizeMax = 9,
     .roomDensity = 200,
     .pathStraightness = 100,
     .connectionRedundancy = 2
   };
-  Generator gen{reg.ctx<World>()};
+  Generator gen{seed, reg.ctx<World>()};
   gen.generate(params);
 }

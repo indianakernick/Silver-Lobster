@@ -8,7 +8,7 @@
 
 #include "world spawning.hpp"
 
-#include <random>
+#include "rng.hpp"
 #include "dir.hpp"
 #include "world.hpp"
 #include "position.hpp"
@@ -21,7 +21,6 @@
 namespace {
 
 struct SpawnParams {
-  uint64_t seed;
   int brightness;    // chance of lights appearing
   int lightDanger;   // chance of enemies appearing in a lit room
   int darkDanger;    // chance of enemies appearing in an unlit room
@@ -30,15 +29,12 @@ struct SpawnParams {
   int spawnAttempts; // maximum number of attempts to spawn enemies in a room
 };
 
-using IntDist = std::uniform_int_distribution<int>;
-
 class Spawner {
 public:
-  Spawner(entt::registry &reg, World &world)
-    : reg{reg}, tiles{world.tiles}, rooms{world.rooms} {}
+  Spawner(const uint64_t seed, entt::registry &reg, World &world)
+    : rng{seed}, reg{reg}, tiles{world.tiles}, rooms{world.rooms} {}
   
   void spawn(const SpawnParams &params) {
-    rng.seed(params.seed);
     spawnPlayer();
     for (const gfx::Rect room : rooms) {
       if (dangerous(placeLight(room, params), params)) {
@@ -48,10 +44,10 @@ public:
   }
   
 private:
+  RNG rng;
   entt::registry &reg;
   gfx::Surface<const Tile> tiles;
   const std::vector<gfx::Rect> &rooms;
-  std::mt19937_64 rng;
   
   static gfx::Point cornerPos(const gfx::Rect rect, const Dir corner) {
     switch (corner) {
@@ -108,9 +104,7 @@ private:
   
   bool placeLight(const gfx::Rect room, const SpawnParams &params) {
     assert(0 <= params.brightness && params.brightness <= 100);
-    
-    IntDist lightDist{0, 99};
-    if (lightDist(rng) >= params.brightness) return false;
+    if (!rng.percent(params.brightness)) return false;
     Dir corners[4];
     std::copy(intercardinal_dirs, intercardinal_dirs + 4, corners);
     std::shuffle(corners, corners + 4, rng);
@@ -127,27 +121,19 @@ private:
   }
   
   bool dangerous(const bool lit, const SpawnParams &params) {
-    assert(0 <= params.lightDanger && params.lightDanger <= 100);
-    assert(0 <= params.darkDanger && params.darkDanger <= 100);
-    
-    IntDist dangerDist{0, 99};
-    return dangerDist(rng) < (lit ? params.lightDanger : params.darkDanger);
+    return rng.percent(lit ? params.lightDanger : params.darkDanger);
   }
   
   void spawnEnemies(const gfx::Rect room, const SpawnParams &params) {
     assert(params.enemyMin >= 0);
     assert(params.enemyMax > 0);
-    assert(params.enemyMin <= params.enemyMax);
     assert(params.spawnAttempts > 0);
     
-    IntDist enemyDist{params.enemyMin, params.enemyMax};
-    IntDist xDist{room.p.x, room.p.x + room.s.w - 1};
-    IntDist yDist{room.p.y, room.p.y + room.s.h - 1};
-    int enemies = enemyDist(rng);
+    int enemies = rng.range(params.enemyMin, params.enemyMax);
     while (enemies--) {
       int attempts = params.spawnAttempts;
       while (attempts--) {
-        const gfx::Point pos = {xDist(rng), yDist(rng)};
+        const gfx::Point pos = rng.point(room);
         if (!occupied(pos)) {
           makeGhost(reg, pos);
           break;
@@ -165,18 +151,19 @@ private:
 // the chosen entity might depend on level
 // harder enemies spawner later in the game
 
+#include <iostream>
+
 void spawnEntities(entt::registry &reg, const uint64_t seed) {
   // TODO: Generate these params from a level number
   const SpawnParams params = {
-    .seed = seed,
     .brightness = 90,
     .lightDanger = 20,
     .darkDanger = 30,
     .enemyMin = 1,
     .enemyMax = 3,
-    .spawnAttempts = 10
+    .spawnAttempts = 100
   };
   
-  Spawner spawner{reg, reg.ctx<World>()};
+  Spawner spawner{seed, reg, reg.ctx<World>()};
   spawner.spawn(params);
 }

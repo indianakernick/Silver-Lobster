@@ -33,6 +33,7 @@
 		45BB02D123E16DB300D6F8E2 /* path finding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02CF23E16DB300D6F8E2 /* path finding.cpp */; };
 		45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D223E1868500D6F8E2 /* ghost.cpp */; };
 		45BB02D823E25DBA00D6F8E2 /* world spawning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */; };
+		45BB02DB23E2A7B700D6F8E2 /* rng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D923E2A7B700D6F8E2 /* rng.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -113,6 +114,8 @@
 		45BB02D323E1868500D6F8E2 /* ghost.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ghost.hpp; sourceTree = "<group>"; };
 		45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "world spawning.cpp"; sourceTree = "<group>"; };
 		45BB02D723E25DBA00D6F8E2 /* world spawning.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "world spawning.hpp"; sourceTree = "<group>"; };
+		45BB02D923E2A7B700D6F8E2 /* rng.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rng.cpp; sourceTree = "<group>"; };
+		45BB02DA23E2A7B700D6F8E2 /* rng.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = rng.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +203,8 @@
 				45BA100223DD6C8400DB4CBB /* dir.hpp */,
 				45BB029F23DD750600D6F8E2 /* dir set.hpp */,
 				45BB02A023DE7B2500D6F8E2 /* dir point.hpp */,
+				45BB02D923E2A7B700D6F8E2 /* rng.cpp */,
+				45BB02DA23E2A7B700D6F8E2 /* rng.hpp */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -358,6 +363,7 @@
 				45BB02CE23E16A6700D6F8E2 /* rest action.cpp in Sources */,
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
 				45BA0FF723DD4C5E00DB4CBB /* sprite rendering.cpp in Sources */,
+				45BB02DB23E2A7B700D6F8E2 /* rng.cpp in Sources */,
 				45BB02A323DEA0C700D6F8E2 /* game loop.cpp in Sources */,
 				45BB02D123E16DB300D6F8E2 /* path finding.cpp in Sources */,
 				45BB02B023DEB7C200D6F8E2 /* action.cpp in Sources */,

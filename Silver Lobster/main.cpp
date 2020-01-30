@@ -41,7 +41,7 @@ public:
     renderer.reset(SDL_CHECK(SDL_CreateRenderer(
       window.get(),
       -1,
-      SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
+      SDL_RENDERER_ACCELERATED
     )));
     
     const SDL_Rect viewport = {
@@ -71,8 +71,8 @@ public:
   void initLevel() {
     initializeWorld(reg, {63, 31});
     initializeLight(reg, {63, 31});
-    generateTerrain(reg, 12345);
-    spawnEntities(reg, 12345);
+    generateTerrain(reg, 1234);
+    spawnEntities(reg, 1234);
   }
   
   void run() {
