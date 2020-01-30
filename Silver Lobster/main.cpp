@@ -9,18 +9,17 @@
 #include <string>
 #include <SDL2/SDL.h>
 #include "Game/renderer.hpp"
-#include "Game/game loop.hpp"
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
-#include "Game/update light.hpp"
-#include "Game/handle input.hpp"
-#include "Game/generate world.hpp"
+#include "Game/Core/game loop.hpp"
 #include "Game/Factories/lamp.hpp"
 #include <entt/entity/registry.hpp>
-#include "Game/render entities.hpp"
 #include "Game/texture loading.hpp"
 #include "Game/Factories/ghost.hpp"
 #include "Game/Factories/player.hpp"
+#include "Game/Core/field of view.hpp"
+#include "Game/Core/input handling.hpp"
+#include "Game/Core/world generation.hpp"
 
 std::string res(const char *path) {
   return std::string(SDL_CHECK(SDL_GetBasePath())) + path;
@@ -43,6 +42,11 @@ public:
       -1,
       SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC
     )));
+    
+    const SDL_Rect viewport = {
+      (1280 - 63 * 16) / 2, (720 - 31 * 16) / 2, 63 * 16, 31 * 16
+    };
+    SDL_CHECK(SDL_RenderSetViewport(renderer.get(), &viewport));
     
     sprites = loadTexture(renderer.get(), res("prototype spritesheet.png").c_str());
     

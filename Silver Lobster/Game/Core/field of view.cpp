@@ -1,12 +1,12 @@
 //
-//  update light.cpp
+//  field of view.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "update light.hpp"
+#include "field of view.hpp"
 
 #include <cmath>
 #include "tags.hpp"

@@ -1,12 +1,12 @@
 //
-//  handle input.cpp
+//  input handling.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 26/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "handle input.hpp"
+#include "input handling.hpp"
 
 #include "tags.hpp"
 #include "brain.hpp"

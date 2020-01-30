@@ -11,9 +11,9 @@
 #include "turn.hpp"
 #include "speed.hpp"
 #include "brain.hpp"
-#include "render world.hpp"
-#include "update light.hpp"
-#include "render entities.hpp"
+#include "field of view.hpp"
+#include "world rendering.hpp"
+#include "sprite rendering.hpp"
 #include <entt/entity/registry.hpp>
 
 bool stepGame(entt::registry &reg) {
@@ -48,5 +48,5 @@ bool stepGame(entt::registry &reg) {
 
 void renderGame(const entt::registry &reg) {
   renderWorld(reg);
-  renderEntities(reg);
+  renderSprites(reg);
 }

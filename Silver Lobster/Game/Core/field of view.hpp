@@ -1,13 +1,13 @@
 //
-//  update light.hpp
+//  field of view.hpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#ifndef update_light_hpp
-#define update_light_hpp
+#ifndef field_of_view_hpp
+#define field_of_view_hpp
 
 #include <entt/entity/fwd.hpp>
 #include <Graphics/geometry.hpp>

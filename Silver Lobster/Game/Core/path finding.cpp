@@ -1,17 +1,16 @@
 //
-//  find path.cpp
+//  path finding.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 29/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "find path.hpp"
+#include "path finding.hpp"
 
 #include <queue>
 #include "world.hpp"
-#include "dir set.hpp"
-#include "dir to point.hpp"
+#include "dir point.hpp"
 #include <entt/entity/registry.hpp>
 
 namespace {

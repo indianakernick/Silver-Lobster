@@ -10,8 +10,8 @@
 
 #include "world.hpp"
 #include "position.hpp"
+#include "dir point.hpp"
 #include "rest action.hpp"
-#include "dir to point.hpp"
 #include "open door action.hpp"
 #include <entt/entity/registry.hpp>
 

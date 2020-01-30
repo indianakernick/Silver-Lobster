@@ -1,13 +1,13 @@
 //
-//  dir to point.hpp
+//  dir point.hpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 27/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#ifndef dir_to_point_hpp
-#define dir_to_point_hpp
+#ifndef dir_point_hpp
+#define dir_point_hpp
 
 #include "dir.hpp"
 #include <Graphics/geometry.hpp>

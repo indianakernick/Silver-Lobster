@@ -1,12 +1,12 @@
 //
-//  generate world.cpp
+//  world generation.cpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#include "generate world.hpp"
+#include "world generation.hpp"
 
 #include <set>
 #include <random>
@@ -14,7 +14,7 @@
 #include "dir set.hpp"
 #include <unordered_set>
 #include <unordered_map>
-#include "dir to point.hpp"
+#include "dir point.hpp"
 #include <Graphics/fill.hpp>
 #include <Graphics/compare.hpp>
 #include <entt/entity/registry.hpp>

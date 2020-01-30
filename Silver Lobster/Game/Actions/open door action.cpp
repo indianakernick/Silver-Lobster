@@ -11,7 +11,7 @@
 #include "dir.hpp"
 #include "world.hpp"
 #include "position.hpp"
-#include "dir to point.hpp"
+#include "dir point.hpp"
 #include <entt/entity/registry.hpp>
 
 OpenDoorAction::OpenDoorAction()

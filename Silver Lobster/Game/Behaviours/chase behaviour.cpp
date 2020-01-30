@@ -10,10 +10,10 @@
 
 #include "tags.hpp"
 #include "position.hpp"
-#include "find path.hpp"
 #include "rest action.hpp"
 #include "move action.hpp"
-#include "update light.hpp"
+#include "path finding.hpp"
+#include "field of view.hpp"
 #include <entt/entity/registry.hpp>
 
 std::unique_ptr<Action> ChaseBehaviour::decide(entt::registry &reg, entt::entity e) {

@@ -1,13 +1,13 @@
 //
-//  generate world.hpp
+//  world generation.hpp
 //  Silver Lobster
 //
 //  Created by Indi Kernick on 25/1/20.
 //  Copyright © 2020 Indi Kernick. All rights reserved.
 //
 
-#ifndef generate_world_hpp
-#define generate_world_hpp
+#ifndef world_generation_hpp
+#define world_generation_hpp
 
 #include <entt/entity/fwd.hpp>
 #include <Graphics/geometry.hpp>
