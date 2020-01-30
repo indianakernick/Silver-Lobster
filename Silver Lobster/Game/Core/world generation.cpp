@@ -16,7 +16,6 @@
 #include <unordered_map>
 #include "dir point.hpp"
 #include <Graphics/fill.hpp>
-#include <Graphics/compare.hpp>
 #include <entt/entity/registry.hpp>
 
 // Dungeon generation algorithm by Bob Nystrom
@@ -37,19 +36,17 @@ constexpr Region null_region = ~Region{};
 
 using IntDist = std::uniform_int_distribution<int>;
 
-gfx::Rect addMargin(const gfx::Rect rect) {
-  return {rect.p - 1, rect.s + 2};
-}
-
 class Generator {
 public:
   explicit Generator(World &world)
-    : tiles{world.tiles}, regions{world.regions} {}
+    : tiles{world.tiles}, regions{world.regions}, rooms{world.rooms} {}
 
   void generate(const GenParams &params) {
     carve(tiles.rect(), Tile::wall);
+    rooms.clear();
     rng.seed(params.seed);
     placeRooms(params);
+    placeExit();
     growMazes(params);
     connectRegions(params);
     removeDeadEnds();
@@ -58,6 +55,7 @@ public:
 private:
   gfx::Surface<Tile> tiles;
   gfx::Surface<Region> regions;
+  std::vector<gfx::Rect> &rooms;
   std::mt19937_64 rng;
   Region currentRegion = null_region;
   
@@ -95,11 +93,26 @@ private:
       const gfx::Point pos{xDist(rng) * 2 + 1, yDist(rng) * 2 + 1};
       const gfx::Rect rect{pos, size};
 
-      if (gfx::equal(tiles.view(addMargin(rect)), Tile::wall)) {
+      bool fit = true;
+      for (const gfx::Rect &room : rooms) {
+        if (rect.intersects(room)) {
+          fit = false;
+          break;
+        }
+      }
+
+      if (fit) {
+        rooms.push_back(rect);
         startRegion();
         carve(rect, Tile::room);
       }
     }
+  }
+  
+  void placeExit() {
+    assert(!rooms.empty());
+    const gfx::Rect room = rooms.front();
+    tiles.ref(room.p + room.s.point() / 2) = Tile::stairs;
   }
   
   // ------------------------------- mazes ---------------------------------- //
@@ -173,6 +186,10 @@ private:
   }
   
   // ---------------------------- connections ------------------------------- //
+  
+  // TODO: optimize this
+  // Make some measurements
+  // Maybe use std::array<Region, 4> instead of std::set<Region>
   
   using RegionSet = std::set<Region>;
   using ConnectorMap = std::unordered_map<gfx::Point, RegionSet>;

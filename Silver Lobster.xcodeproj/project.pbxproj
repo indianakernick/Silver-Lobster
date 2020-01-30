@@ -32,6 +32,7 @@
 		45BB02CE23E16A6700D6F8E2 /* rest action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02CC23E16A6700D6F8E2 /* rest action.cpp */; };
 		45BB02D123E16DB300D6F8E2 /* path finding.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02CF23E16DB300D6F8E2 /* path finding.cpp */; };
 		45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D223E1868500D6F8E2 /* ghost.cpp */; };
+		45BB02D823E25DBA00D6F8E2 /* world spawning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -110,6 +111,8 @@
 		45BB02D023E16DB300D6F8E2 /* path finding.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "path finding.hpp"; sourceTree = "<group>"; };
 		45BB02D223E1868500D6F8E2 /* ghost.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ghost.cpp; sourceTree = "<group>"; };
 		45BB02D323E1868500D6F8E2 /* ghost.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ghost.hpp; sourceTree = "<group>"; };
+		45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "world spawning.cpp"; sourceTree = "<group>"; };
+		45BB02D723E25DBA00D6F8E2 /* world spawning.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "world spawning.hpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +278,8 @@
 				4508C82823DD26770029A03B /* world rendering.hpp */,
 				45BA0FFC23DD5FF300DB4CBB /* input handling.cpp */,
 				45BA0FFD23DD5FF300DB4CBB /* input handling.hpp */,
+				45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */,
+				45BB02D723E25DBA00D6F8E2 /* world spawning.hpp */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -360,6 +365,7 @@
 				4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */,
 				45BB02B723DFF49900D6F8E2 /* open door action.cpp in Sources */,
 				45BB02B323DEBB1700D6F8E2 /* move action.cpp in Sources */,
+				45BB02D823E25DBA00D6F8E2 /* world spawning.cpp in Sources */,
 				45BB02C423E0170900D6F8E2 /* player.cpp in Sources */,
 				45BB02C023E015BF00D6F8E2 /* player behaviour.cpp in Sources */,
 				4508C82923DD26770029A03B /* world rendering.cpp in Sources */,

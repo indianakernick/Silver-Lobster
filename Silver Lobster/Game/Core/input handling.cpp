@@ -10,6 +10,7 @@
 
 #include "tags.hpp"
 #include "brain.hpp"
+#include "rest action.hpp"
 #include "move action.hpp"
 #include "player behaviour.hpp"
 #include "open door action.hpp"
@@ -79,7 +80,7 @@ bool handleKeyDown(entt::registry &reg, const SDL_Scancode key) {
     
     case SDL_SCANCODE_K:
     case SDL_SCANCODE_5:
-      setMove(reg, Dir::none);
+      setNext(reg, std::make_unique<RestAction>());
       return true;
     
     case SDL_SCANCODE_D:

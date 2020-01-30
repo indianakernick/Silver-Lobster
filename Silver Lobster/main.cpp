@@ -18,6 +18,7 @@
 #include "Game/Factories/ghost.hpp"
 #include "Game/Factories/player.hpp"
 #include "Game/Core/field of view.hpp"
+#include "Game/Core/world spawning.hpp"
 #include "Game/Core/input handling.hpp"
 #include "Game/Core/world generation.hpp"
 
@@ -68,12 +69,10 @@ public:
   }
   
   void initLevel() {
-    makePlayer(reg, {12, 1});
-    makeLamp(reg, {3, 3});
-    makeGhost(reg, {11, 3});
     initializeWorld(reg, {63, 31});
     initializeLight(reg, {63, 31});
     generateTerrain(reg);
+    spawnEntities(reg);
   }
   
   void run() {

@@ -9,7 +9,9 @@
 #ifndef world_hpp
 #define world_hpp
 
+#include <vector>
 #include "image.hpp"
+#include <Graphics/geometry.hpp>
 
 enum class Tile : uint8_t {
   wall,
@@ -31,6 +33,7 @@ using Region = uint8_t;
 struct World {
   Image<Tile> tiles;
   Image<Region> regions;
+  std::vector<gfx::Rect> rooms;
 };
 
 struct Sight {
