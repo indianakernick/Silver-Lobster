@@ -25,11 +25,11 @@ namespace {
 
 struct GenParams {
   uint64_t seed;
-  int roomSizeMin;
-  int roomSizeMax;
-  int roomDensity;
-  int mazeStraightness;
-  int connectionRedundancy;
+  int roomSizeMin;          // minimum size of a room
+  int roomSizeMax;          // maximum size of a room
+  int roomDensity;          // number of attempts to place rooms
+  int pathStraightness;     // chance of a path continuing in the same direction
+  int connectionRedundancy; // chance of a redundant doorway appearing
 };
 
 constexpr Region null_region = ~Region{};
@@ -133,7 +133,7 @@ private:
   }
   
   void growMaze(const gfx::Point start, const GenParams &params) {
-    assert(0 <= params.mazeStraightness && params.mazeStraightness <= 100);
+    assert(0 <= params.pathStraightness && params.pathStraightness <= 100);
     
     IntDist straightDist{0, 99};
     std::vector<gfx::Point> cells;
@@ -157,7 +157,7 @@ private:
         Dir dir = randomDir(unmadeCells);
         if (lastDir != Dir::none) {
           if (unmadeCells.test(lastDir)) {
-            if (straightDist(rng) < params.mazeStraightness) {
+            if (straightDist(rng) < params.pathStraightness) {
               dir = lastDir;
             }
           }
@@ -323,13 +323,13 @@ void initializeWorld(entt::registry &reg, const gfx::Size size) {
   world.regions = {size};
 }
 
-void generateTerrain(entt::registry &reg) {
+void generateTerrain(entt::registry &reg, const uint64_t seed) {
   const GenParams params = {
-    .seed = 12345,
+    .seed = seed,
     .roomSizeMin = 3,
     .roomSizeMax = 9,
     .roomDensity = 200,
-    .mazeStraightness = 100,
+    .pathStraightness = 100,
     .connectionRedundancy = 2
   };
   Generator gen{reg.ctx<World>()};

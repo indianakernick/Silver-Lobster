@@ -13,6 +13,6 @@
 #include <Graphics/geometry.hpp>
 
 void initializeWorld(entt::registry &, gfx::Size);
-void generateTerrain(entt::registry &);
+void generateTerrain(entt::registry &, uint64_t);
 
 #endif

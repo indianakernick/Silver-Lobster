@@ -11,6 +11,6 @@
 
 #include <entt/entity/fwd.hpp>
 
-void spawnEntities(entt::registry &);
+void spawnEntities(entt::registry &, uint64_t);
 
 #endif

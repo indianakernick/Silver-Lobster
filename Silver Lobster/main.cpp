@@ -71,8 +71,8 @@ public:
   void initLevel() {
     initializeWorld(reg, {63, 31});
     initializeLight(reg, {63, 31});
-    generateTerrain(reg);
-    spawnEntities(reg);
+    generateTerrain(reg, 12345);
+    spawnEntities(reg, 12345);
   }
   
   void run() {
