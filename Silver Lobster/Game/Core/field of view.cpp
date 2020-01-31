@@ -12,6 +12,7 @@
 #include "tags.hpp"
 #include "world.hpp"
 #include "position.hpp"
+#include "scope time.hpp"
 #include "light source.hpp"
 #include <Graphics/each.hpp>
 #include <Graphics/fill.hpp>
@@ -289,7 +290,7 @@ private:
   gfx::Surface<const Tile> tiles;
   gfx::Surface<const bool> lit;
   gfx::Point playerPos;
-  bool seen;
+  bool seen = false;
 };
 
 }
@@ -305,6 +306,8 @@ void initializeLight(entt::registry &reg, const gfx::Size size) {
 }
 
 void updateLight(entt::registry &reg) {
+  SCOPE_TIME("updateLight");
+
   gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
   gfx::Surface<bool> lit = reg.ctx<Light>().lit;
   gfx::fill(lit, false);
@@ -315,6 +318,8 @@ void updateLight(entt::registry &reg) {
 }
 
 void updateVisibility(entt::registry &reg) {
+  SCOPE_TIME("updateVisibility");
+
   gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
   gfx::Surface<const bool> lit = reg.ctx<Light>().lit;
   gfx::Surface<Visibility> visible = reg.ctx<Sight>().visibility;

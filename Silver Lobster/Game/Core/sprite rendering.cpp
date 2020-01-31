@@ -13,10 +13,13 @@
 #include "position.hpp"
 #include "renderer.hpp"
 #include "sdl check.hpp"
+#include "scope time.hpp"
 #include <SDL2/SDL_render.h>
 #include <entt/entity/registry.hpp>
 
 void renderSprites(const entt::registry &reg) {
+  SCOPE_TIME("renderSprites");
+
   auto &renderer = reg.ctx<Renderer>();
   gfx::Surface<const Visibility> visible = reg.ctx<Sight>().visibility;
   auto view = reg.view<const Position, const Sprite>();

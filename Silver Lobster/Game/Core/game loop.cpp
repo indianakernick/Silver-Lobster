@@ -11,12 +11,15 @@
 #include "turn.hpp"
 #include "speed.hpp"
 #include "brain.hpp"
+#include "scope time.hpp"
 #include "field of view.hpp"
 #include "world rendering.hpp"
 #include "sprite rendering.hpp"
 #include <entt/entity/registry.hpp>
 
 bool stepGame(entt::registry &reg) {
+  SCOPE_TIME("stepGame");
+
   Turn &turn = reg.ctx_or_set<Turn>(size_t{});
   auto speedView = reg.view<Speed>();
   if (turn.i >= speedView.size()) {
@@ -47,6 +50,8 @@ bool stepGame(entt::registry &reg) {
 }
 
 void renderGame(const entt::registry &reg) {
+  SCOPE_TIME("renderGame");
+  
   renderWorld(reg);
   renderSprites(reg);
 }

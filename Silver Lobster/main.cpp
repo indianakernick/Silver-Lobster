@@ -8,6 +8,7 @@
 
 #include <string>
 #include <SDL2/SDL.h>
+#include "scope time.hpp"
 #include "Game/renderer.hpp"
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
@@ -29,6 +30,8 @@ std::string res(const char *path) {
 class Game {
 public:
   void init() {
+    SCOPE_TIME("Game::init");
+  
     SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
   
     window.reset(SDL_CHECK(SDL_CreateWindow(
@@ -55,6 +58,8 @@ public:
   }
   
   void quit() {
+    SCOPE_TIME("Game::quit");
+  
     sprites.reset();
     renderer.reset();
     window.reset();
@@ -62,6 +67,8 @@ public:
   }
   
   void render() {
+    SCOPE_TIME("Game::render");
+    
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     renderGame(reg);
@@ -69,6 +76,8 @@ public:
   }
   
   void initLevel() {
+    SCOPE_TIME("Game::initLevel");
+  
     initializeWorld(reg, {63, 31});
     initializeLight(reg, {63, 31});
     generateTerrain(reg, 1234);
@@ -76,6 +85,8 @@ public:
   }
   
   void run() {
+    SCOPE_TIME("Game::run");
+   
     while (true) {
       SDL_Event e;
       while (SDL_PollEvent(&e)) {
@@ -103,10 +114,16 @@ private:
 };
 
 int main() {
-  Game game;
-  game.init();
-  game.initLevel();
-  game.render();
-  game.run();
-  game.quit();
+  {
+    SCOPE_TIME("main");
+
+    Game game;
+    game.init();
+    game.initLevel();
+    game.render();
+    game.run();
+    game.quit();
+  }
+  
+  SCOPE_TIME_PRINT();
 }

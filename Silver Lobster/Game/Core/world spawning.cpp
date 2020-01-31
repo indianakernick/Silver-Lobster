@@ -55,7 +55,9 @@ private:
       case Dir::down_right: return rect.p + rect.s.point();
       case Dir::down_left:  return {rect.p.x, rect.p.y + rect.s.h - 1};
       case Dir::up_left:    return rect.p;
-      default: assert(false);
+      default:
+        assert(false);
+        return {};
     }
   }
   

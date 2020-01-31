@@ -11,6 +11,7 @@
 #include "world.hpp"
 #include "renderer.hpp"
 #include "sdl check.hpp"
+#include "scope time.hpp"
 #include <SDL2/SDL_render.h>
 #include <entt/entity/registry.hpp>
 
@@ -44,6 +45,8 @@ SDL_Rect sourceRect(const Tile tile) {
 }
 
 void renderWorld(const entt::registry &reg) {
+  SCOPE_TIME("renderWorld");
+
   const gfx::Surface<const Tile> tiles = reg.ctx<World>().tiles;
   const gfx::Surface<const Visibility> visible = reg.ctx<Sight>().visibility;
   auto renderer = reg.ctx<Renderer>();
