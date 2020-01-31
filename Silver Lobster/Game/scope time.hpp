@@ -12,12 +12,16 @@
 #ifdef ENABLE_SCOPE_TIME
 
 #include <chrono>
-#include <unordered_map>
 
-class ScopeTime {
+class ScopeTime final {
 public:
-  explicit ScopeTime(const char *);
-  ~ScopeTime();
+  explicit ScopeTime(const char *name) {
+    push(name);
+    start = Clock::now();
+  }
+  ~ScopeTime() {
+    pop(start, Clock::now());
+  }
   
   static void print();
   static void reset();
@@ -27,40 +31,17 @@ private:
 
   Clock::time_point start;
 
-  struct TreeNode {
-    size_t calls = 0;
-    Clock::duration time;
-    std::unordered_map<const char *, TreeNode> children;
-    const char *name;
-    TreeNode *parent;
-  };
+  struct TreeNode;
   
-  static inline TreeNode tree {0, {}, {}, "ROOT", nullptr};
-  static inline TreeNode *current = &tree;
+  static TreeNode tree;
+  static TreeNode *current;
   
-  static void printImpl(const TreeNode *, int);
-  
-  static constexpr int name_indent = 2;
-  static constexpr int num_prec = 4;
-  static constexpr int name_width = 48;
-  static constexpr int rest_width = 24;
+  static void push(const char *);
+  static void pop(Clock::time_point, Clock::time_point) noexcept;
+  static void printImpl(const TreeNode &, int);
 };
 
-inline ScopeTime::ScopeTime(const char *name) {
-  TreeNode *prevCurrent = current;
-  current = &current->children[name];
-  current->parent = prevCurrent;
-  current->name = name;
-  start = Clock::now();
-}
-
-inline ScopeTime::~ScopeTime() {
-  current->time += Clock::now() - start;
-  ++current->calls;
-  current = current->parent;
-}
-
-#define SCOPE_TIME_IMPL2(NAME, LINE) ScopeTime scope_time_##LINE {NAME}
+#define SCOPE_TIME_IMPL2(NAME, LINE) const ScopeTime scope_time_##LINE {NAME}
 #define SCOPE_TIME_IMPL(NAME, LINE) SCOPE_TIME_IMPL2(NAME, LINE)
 #define SCOPE_TIME(NAME) SCOPE_TIME_IMPL(NAME, __LINE__)
 #define NO_SCOPE_TIME(NAME) SCOPE_TIME(nullptr)

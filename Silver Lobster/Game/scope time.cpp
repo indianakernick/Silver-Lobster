@@ -13,6 +13,27 @@
 #include <vector>
 #include <iomanip>
 #include <iostream>
+#include <algorithm>
+
+struct ScopeTime::TreeNode {
+  size_t calls = 0;
+  Clock::duration time;
+  std::vector<TreeNode> children;
+  const char *name;
+  TreeNode *parent;
+};
+
+ScopeTime::TreeNode ScopeTime::tree = {0, {}, {}, "ROOT", nullptr};
+ScopeTime::TreeNode *ScopeTime::current = &ScopeTime::tree;
+
+namespace {
+
+constexpr int name_indent = 2;
+constexpr int num_prec = 4;
+constexpr int name_width = 48;
+constexpr int rest_width = 24;
+
+}
 
 void ScopeTime::print() {
   std::cout << std::setw(name_width) << std::left << "Name";
@@ -24,7 +45,7 @@ void ScopeTime::print() {
   std::cout << '\n';
 
   const size_t prec = std::cout.precision(num_prec);
-  printImpl(&tree, 0);
+  printImpl(tree, 0);
   std::cout.precision(prec);
 }
 
@@ -37,58 +58,69 @@ void ScopeTime::reset() {
   tree.parent = nullptr;
 }
 
-void ScopeTime::printImpl(const TreeNode *node, const int depth) {
-  if (node->name == nullptr) return;
+void ScopeTime::push(const char *name) {
+  TreeNode *parent = current;
+  for (TreeNode &child : parent->children) {
+    if (child.name == name) {
+      current = &child;
+      return;
+    }
+  }
+  current = &parent->children.emplace_back();
+  current->parent = parent;
+  current->name = name;
+}
+
+void ScopeTime::pop(const Clock::time_point start, const Clock::time_point end) noexcept {
+  current->time += end - start;
+  ++current->calls;
+  current = current->parent;
+}
+
+void ScopeTime::printImpl(const TreeNode &node, const int depth) {
+  if (node.name == nullptr) return;
   int newDepth = 0;
-  if (node->parent) {
+  if (node.parent) {
     newDepth = depth + 1;
     
     const int indent = depth * name_indent;
     std::cout << std::setw(indent) << "";
-    std::cout << std::setw(name_width - indent) << std::left << node->name;
+    std::cout << std::setw(name_width - indent) << std::left << node.name;
     
-    std::cout << std::setw(rest_width) << std::left << node->calls;
+    std::cout << std::setw(rest_width) << std::left << node.calls;
     
-    //not child of root
-    if (node->parent->parent) {
-      const double avg = static_cast<double>(node->calls) / node->parent->calls;
+    if (node.parent->parent) {
+      const double avg = static_cast<double>(node.calls) / node.parent->calls;
       std::cout << std::setw(rest_width) << std::left << avg;
     } else {
-      std::cout << std::setw(rest_width) << std::left << node->calls;
+      std::cout << std::setw(rest_width) << std::left << node.calls;
     }
 
     using MilliFloat = std::chrono::duration<double, std::milli>;
-    const double total = std::chrono::duration_cast<MilliFloat>(node->time).count();
+    const double total = std::chrono::duration_cast<MilliFloat>(node.time).count();
     std::cout << std::setw(rest_width) << std::left << total;
 
-    if (node->calls) {
-      std::cout << std::setw(rest_width) << std::left << total / node->calls;
+    if (node.calls) {
+      std::cout << std::setw(rest_width) << std::left << total / node.calls;
     } else {
       std::cout << std::setw(rest_width) << 0;
     }
     
-    //not child of root
-    if (node->parent->parent) {
-      const double percent = (100.0 * node->time.count()) / node->parent->time.count();
+    if (node.parent->parent) {
+      const double percent = (100.0 * node.time.count()) / node.parent->time.count();
       std::cout << percent << '%';
     }
     
     std::cout << '\n';
   }
   
-  //copy children into a vector
-  std::vector<const TreeNode *> children;
-  children.reserve(node->children.size());
-  for (auto i = node->children.begin(); i != node->children.end(); ++i) {
-    children.push_back(&(i->second));
-  }
+  std::vector<TreeNode> kids = node.children;
   
-  //sort by total time in accending order
-  std::sort(children.begin(), children.end(), [](const TreeNode *a, const TreeNode *b) {
-    return a->time > b->time;
+  std::sort(kids.begin(), kids.end(), [](const TreeNode &a, const TreeNode &b) {
+    return a.time > b.time;
   });
   
-  for (const TreeNode *child : children) {
+  for (const TreeNode &child : kids) {
     printImpl(child, newDepth);
   }
 }
