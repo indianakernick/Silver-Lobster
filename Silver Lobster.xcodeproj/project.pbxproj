@@ -34,6 +34,7 @@
 		45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D223E1868500D6F8E2 /* ghost.cpp */; };
 		45BB02D823E25DBA00D6F8E2 /* world spawning.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D623E25DBA00D6F8E2 /* world spawning.cpp */; };
 		45BB02DB23E2A7B700D6F8E2 /* rng.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB02D923E2A7B700D6F8E2 /* rng.cpp */; };
+		45BB032423E3C3F400D6F8E2 /* scope time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BB032323E3C3F400D6F8E2 /* scope time.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -173,6 +174,8 @@
 		45BB031F23E2DD9000D6F8E2 /* format.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = format.hpp; sourceTree = "<group>"; };
 		45BB032023E2DD9000D6F8E2 /* mask.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = mask.hpp; sourceTree = "<group>"; };
 		45BB032123E2DD9000D6F8E2 /* convert.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = convert.hpp; sourceTree = "<group>"; };
+		45BB032223E3C3F400D6F8E2 /* scope time.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "scope time.hpp"; sourceTree = "<group>"; };
+		45BB032323E3C3F400D6F8E2 /* scope time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "scope time.cpp"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +266,8 @@
 				45BB02A023DE7B2500D6F8E2 /* dir point.hpp */,
 				45BB02D923E2A7B700D6F8E2 /* rng.cpp */,
 				45BB02DA23E2A7B700D6F8E2 /* rng.hpp */,
+				45BB032323E3C3F400D6F8E2 /* scope time.cpp */,
+				45BB032223E3C3F400D6F8E2 /* scope time.hpp */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -562,6 +567,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45BB032423E3C3F400D6F8E2 /* scope time.cpp in Sources */,
 				45BB02CE23E16A6700D6F8E2 /* rest action.cpp in Sources */,
 				4508C80823DA89140029A03B /* main.cpp in Sources */,
 				45BA0FF723DD4C5E00DB4CBB /* sprite rendering.cpp in Sources */,
@@ -763,6 +769,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					STBI_ONLY_PNG,
+					ENABLE_SCOPE_TIME,
 				);
 				HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/include";
 				INFOPLIST_FILE = "Silver Lobster/Info.plist";
