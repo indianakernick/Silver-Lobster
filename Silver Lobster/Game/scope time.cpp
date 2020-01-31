@@ -10,15 +10,14 @@
 
 #ifdef ENABLE_SCOPE_TIME
 
-#include <vector>
 #include <iomanip>
 #include <iostream>
-#include <algorithm>
+#include <forward_list>
 
 struct ScopeTime::TreeNode {
   size_t calls = 0;
   Clock::duration time;
-  std::vector<TreeNode> children;
+  std::forward_list<TreeNode> children;
   const char *name;
   TreeNode *parent;
 };
@@ -66,7 +65,7 @@ void ScopeTime::push(const char *name) {
       return;
     }
   }
-  current = &parent->children.emplace_back();
+  current = &parent->children.emplace_front();
   current->parent = parent;
   current->name = name;
 }
@@ -114,9 +113,9 @@ void ScopeTime::printImpl(const TreeNode &node, const int depth) {
     std::cout << '\n';
   }
   
-  std::vector<TreeNode> kids = node.children;
+  std::forward_list<TreeNode> kids = node.children;
   
-  std::sort(kids.begin(), kids.end(), [](const TreeNode &a, const TreeNode &b) {
+  kids.sort([](const TreeNode &a, const TreeNode &b) {
     return a.time > b.time;
   });
   
