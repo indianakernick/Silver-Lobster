@@ -76,22 +76,23 @@ public:
   }
   
   void run() {
-    bool running = true;
-    do {
+    while (true) {
       SDL_Event e;
       while (SDL_PollEvent(&e)) {
         if (e.type == SDL_QUIT) {
-          running = false;
+          return;
         } else if (e.type == SDL_KEYDOWN) {
           handleKeyDown(reg, e.key.keysym.scancode);
         }
       }
+      
       if (stepGame(reg)) {
+        while (stepGame(reg));
         render();
       } else {
         SDL_Delay(10);
       }
-    } while (running);
+    }
   }
   
 private:
