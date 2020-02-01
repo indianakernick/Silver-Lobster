@@ -17,6 +17,7 @@
 		4508C82923DD26770029A03B /* world rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82723DD26770029A03B /* world rendering.cpp */; };
 		4508C82C23DD2C7F0029A03B /* texture loading.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82A23DD2C7F0029A03B /* texture loading.cpp */; };
 		4508C82F23DD2CE30029A03B /* stb_image.c in Sources */ = {isa = PBXBuildFile; fileRef = 4508C82E23DD2CE30029A03B /* stb_image.c */; };
+		45B7447223E532670040DF89 /* attack action.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B7447023E532670040DF89 /* attack action.cpp */; };
 		45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45B9F6E123DD386000CA9021 /* sdl delete.cpp */; };
 		45BA0FF723DD4C5E00DB4CBB /* sprite rendering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0FF523DD4C5E00DB4CBB /* sprite rendering.cpp */; };
 		45BA0FFE23DD5FF300DB4CBB /* input handling.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45BA0FFC23DD5FF300DB4CBB /* input handling.cpp */; };
@@ -72,6 +73,9 @@
 		4508C82B23DD2C7F0029A03B /* texture loading.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "texture loading.hpp"; sourceTree = "<group>"; };
 		4508C82D23DD2CC90029A03B /* stb_image.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stb_image.h; sourceTree = "<group>"; };
 		4508C82E23DD2CE30029A03B /* stb_image.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = stb_image.c; sourceTree = "<group>"; };
+		45B7446F23E519850040DF89 /* combat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = combat.hpp; sourceTree = "<group>"; };
+		45B7447023E532670040DF89 /* attack action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "attack action.cpp"; sourceTree = "<group>"; };
+		45B7447123E532670040DF89 /* attack action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "attack action.hpp"; sourceTree = "<group>"; };
 		45B9F6E123DD386000CA9021 /* sdl delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "sdl delete.cpp"; sourceTree = "<group>"; };
 		45B9F6E223DD386000CA9021 /* sdl delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "sdl delete.hpp"; sourceTree = "<group>"; };
 		45BA0FF423DD4BC400DB4CBB /* renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
@@ -284,6 +288,7 @@
 				45BB02A423DEA3A500D6F8E2 /* speed.hpp */,
 				45BB02BD23E0157C00D6F8E2 /* brain.hpp */,
 				45BB02C523E13FE600D6F8E2 /* light source.hpp */,
+				45B7446F23E519850040DF89 /* combat.hpp */,
 			);
 			name = Components;
 			sourceTree = "<group>";
@@ -299,6 +304,8 @@
 				45BB02B623DFF49900D6F8E2 /* open door action.hpp */,
 				45BB02CC23E16A6700D6F8E2 /* rest action.cpp */,
 				45BB02CD23E16A6700D6F8E2 /* rest action.hpp */,
+				45B7447023E532670040DF89 /* attack action.cpp */,
+				45B7447123E532670040DF89 /* attack action.hpp */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -588,6 +595,7 @@
 				45B9F6E323DD386000CA9021 /* sdl delete.cpp in Sources */,
 				45BB02C823E1486000D6F8E2 /* lamp.cpp in Sources */,
 				45BB02CB23E16A0100D6F8E2 /* chase behaviour.cpp in Sources */,
+				45B7447223E532670040DF89 /* attack action.cpp in Sources */,
 				4508C82123DC0A380029A03B /* field of view.cpp in Sources */,
 				45BB02D423E1868500D6F8E2 /* ghost.cpp in Sources */,
 				4508C82F23DD2CE30029A03B /* stb_image.c in Sources */,

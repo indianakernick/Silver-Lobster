@@ -12,6 +12,7 @@
 #include "brain.hpp"
 #include "speed.hpp"
 #include "sprite.hpp"
+#include "combat.hpp"
 #include "position.hpp"
 #include "light source.hpp"
 #include "player behaviour.hpp"
@@ -25,5 +26,9 @@ entt::entity makePlayer(entt::registry &reg, const gfx::Point pos) {
   reg.assign<Speed>(e, Speed::max);
   reg.assign<Brain>(e, std::make_unique<PlayerBehaviour>());
   reg.assign<LightSource>(e, 1);
+  reg.assign<Health>(e, 100);
+  reg.assign<Dodge>(e, 10);
+  reg.assign<Armour>(e, 20, 100);
+  reg.assign<Attack>(e, 10, 70);
   return e;
 }
