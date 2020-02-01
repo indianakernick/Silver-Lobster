@@ -17,7 +17,7 @@ namespace {
 
 struct Node {
   gfx::Point pos;
-  gfx::Point prevPos;
+  gfx::Point prev;
   int steps;
   float cost;
 };
@@ -44,23 +44,25 @@ struct Policy {
   void next(const Node &);
   
   // no path was found
-  void finalize();
+  void fail();
   // a path was found
-  void finalize(std::vector<Node> &);
+  void succeed(Node &);
 };
 */
 
 template <typename Policy>
 void astar(Policy &policy, const gfx::Point from, const gfx::Point to) {
+  // TODO: this never returns when there is no route
+  
   NodeQueue queue;
   queue.push({to, to, 0, policy.distance(from, to)});
   
   while (true) {
     if (queue.empty()) {
-      policy.finalize();
+      policy.fail();
       return;
     } else if (queue.top().pos == from) {
-      policy.finalize(queue.c);
+      policy.succeed(queue.top());
       return;
     }
     
@@ -71,7 +73,7 @@ void astar(Policy &policy, const gfx::Point from, const gfx::Point to) {
     
     for (const Dir dir : all_dirs) {
       const gfx::Point neighborPos = top.pos + toPoint(dir);
-      if (neighborPos == top.prevPos) continue;
+      if (neighborPos == top.prev) continue;
       if (!policy.walkable(neighborPos, dir)) continue;
       
       const Node neighbor = {
@@ -82,11 +84,12 @@ void astar(Policy &policy, const gfx::Point from, const gfx::Point to) {
       };
       bool found = false;
       
-      for (auto n = queue.c.cbegin(); n != queue.c.cend(); ++n) {
+      for (auto n = queue.c.begin(); n != queue.c.end(); ++n) {
         if (n->pos == neighborPos) {
           found = true;
-          if (neighbor.cost < n->cost) {
-            queue.c.erase(n);
+          if (neighbor.steps < n->steps) {
+            // TODO: Could remove n
+            // but that's a bit tricky
             queue.push(neighbor);
           }
           break;
@@ -123,12 +126,12 @@ public:
   
   void next(const Node &) {}
   
-  void finalize() {
+  void fail() {
     dir = Dir::none;
   }
   
-  void finalize(std::vector<Node> &queue) {
-    dir = fromPoint(queue.front().prevPos - queue.front().pos);
+  void succeed(const Node &node) {
+    dir = fromPoint(node.prev - node.pos);
   }
   
   explicit MonsterPolicy(const gfx::Surface<const Tile> tiles)
@@ -140,7 +143,7 @@ public:
 
 private:
   gfx::Surface<const Tile> tiles;
-  Dir dir;
+  Dir dir = Dir::none;
 };
 
 }
