@@ -52,6 +52,7 @@ void renderWorld(const entt::registry &reg) {
   auto renderer = reg.ctx<Renderer>();
   for (int y = 0; y != tiles.height(); ++y) {
     for (int x = 0; x != tiles.width(); ++x) {
+      if (visible.ref(x, y) == Visibility::unexplored) continue;
       setColorMod(renderer.tex, visible.ref(x, y));
       const SDL_Rect srcRect = sourceRect(tiles.ref(x, y));
       const SDL_Rect dstRect = {x * 16, y * 16, 16, 16};
