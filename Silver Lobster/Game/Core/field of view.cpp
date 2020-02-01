@@ -250,10 +250,19 @@ public:
   }
   
   void setVisible(const unsigned x, const unsigned y) {
+    /*
     if (lit.contains(x, y)) {
       if (lit.ref(x, y)) {
         visible.ref(x, y) = Visibility::visible;
       }
+    }
+    */
+    
+    // I think this one is more satisfying.
+    // At least until I figure out how to fix the problem with light that lets
+    // the player see that a room is lit from outside the room
+    if (visible.contains(x, y)) {
+      visible.ref(x, y) = Visibility::visible;
     }
   }
   
