@@ -76,6 +76,7 @@
 		45B7446F23E519850040DF89 /* combat.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = combat.hpp; sourceTree = "<group>"; };
 		45B7447023E532670040DF89 /* attack action.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "attack action.cpp"; sourceTree = "<group>"; };
 		45B7447123E532670040DF89 /* attack action.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "attack action.hpp"; sourceTree = "<group>"; };
+		45B7447423E6A7BB0040DF89 /* reflection.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = reflection.hpp; sourceTree = "<group>"; };
 		45B9F6E123DD386000CA9021 /* sdl delete.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = "sdl delete.cpp"; sourceTree = "<group>"; };
 		45B9F6E223DD386000CA9021 /* sdl delete.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = "sdl delete.hpp"; sourceTree = "<group>"; };
 		45BA0FF423DD4BC400DB4CBB /* renderer.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = renderer.hpp; sourceTree = "<group>"; };
@@ -272,6 +273,7 @@
 				45BB02DA23E2A7B700D6F8E2 /* rng.hpp */,
 				45BB032323E3C3F400D6F8E2 /* scope time.cpp */,
 				45BB032223E3C3F400D6F8E2 /* scope time.hpp */,
+				45B7447423E6A7BB0040DF89 /* reflection.hpp */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";

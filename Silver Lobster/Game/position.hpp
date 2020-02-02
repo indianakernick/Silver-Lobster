@@ -9,10 +9,15 @@
 #ifndef position_hpp
 #define position_hpp
 
+#include "reflection.hpp"
 #include <Graphics/geometry.hpp>
 
 struct Position {
   gfx::Point p;
 };
+
+REFL(Position,
+  REFL_DATA(p)
+);
 
 #endif

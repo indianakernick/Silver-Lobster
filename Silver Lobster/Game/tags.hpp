@@ -9,6 +9,10 @@
 #ifndef tags_hpp
 #define tags_hpp
 
+#include "reflection.hpp"
+
 struct Player {};
+
+REFL_EMPTY(Player);
 
 #endif

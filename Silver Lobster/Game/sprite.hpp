@@ -9,8 +9,15 @@
 #ifndef sprite_hpp
 #define sprite_hpp
 
+#include "reflection.hpp"
+
 struct Sprite {
   int x, y;
 };
+
+REFL(Sprite,
+  REFL_DATA(x)
+  REFL_DATA(y)
+);
 
 #endif

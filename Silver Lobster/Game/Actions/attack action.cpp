@@ -24,6 +24,9 @@ Outcome AttackAction::apply(entt::registry &reg, const entt::entity e) const {
   
   if (!reg.has<Attack>(e)) return false;
   const Attack attack = reg.get<Attack>(e);
+  // TODO: partial hits
+  // there could be a chance of doing full damage then a smaller chance of doing
+  // half damage
   if (!rng.percent(attack.accuracy)) {
     if (reg.has<Player>(target)) {
       std::cout << "Ghost missed\n";

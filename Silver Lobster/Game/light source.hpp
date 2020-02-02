@@ -9,8 +9,14 @@
 #ifndef light_source_hpp
 #define light_source_hpp
 
+#include "reflection.hpp"
+
 struct LightSource {
   int radius;
 };
+
+REFL(LightSource,
+  REFL_DATA(radius)
+);
 
 #endif
