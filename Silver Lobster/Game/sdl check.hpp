@@ -14,9 +14,9 @@
 
 namespace SDL {
 
-class Error final : std::runtime_error {
+class Error final : public std::runtime_error {
 public:
-  Error(const char *error) noexcept
+  explicit Error(const char *error) noexcept
     : std::runtime_error{error} {}
 };
 
