@@ -10,8 +10,10 @@
 #include <SDL2/SDL.h>
 #include "scope time.hpp"
 #include "Game/renderer.hpp"
+#include <SDL2_ttf/SDL_ttf.h>
 #include "Game/sdl check.hpp"
 #include "Game/sdl delete.hpp"
+#include "Game/text rendering.hpp"
 #include "Game/Core/game loop.hpp"
 #include "Game/Factories/lamp.hpp"
 #include <entt/entity/registry.hpp>
@@ -33,6 +35,7 @@ public:
     SCOPE_TIME("Game::init");
   
     SDL_CHECK(SDL_Init(SDL_INIT_VIDEO));
+    SDL_CHECK(TTF_Init());
   
     window.reset(SDL_CHECK(SDL_CreateWindow(
       "Silver Lobster",
@@ -54,15 +57,19 @@ public:
     
     sprites = loadTexture(renderer.get(), res("prototype spritesheet.png").c_str());
     
+    font.reset(SDL_CHECK(TTF_OpenFont(res("prototype font.ttf").c_str(), 16)));
+    
     reg.set<Renderer>(sprites.get(), renderer.get());
   }
   
   void quit() {
     SCOPE_TIME("Game::quit");
   
+    font.reset();
     sprites.reset();
     renderer.reset();
     window.reset();
+    TTF_Quit();
     SDL_Quit();
   }
   
@@ -72,6 +79,7 @@ public:
     SDL_CHECK(SDL_SetRenderDrawColor(renderer.get(), 0, 0, 0, 255));
     SDL_CHECK(SDL_RenderClear(renderer.get()));
     renderGame(reg);
+    renderText(renderer.get(), font.get(), "This is a test", 0, 0);
     SDL_RenderPresent(renderer.get());
   }
   
@@ -110,6 +118,7 @@ private:
   SDL::Window window;
   SDL::Renderer renderer;
   SDL::Texture sprites;
+  SDL::Font font;
   entt::registry reg;
 };
 
